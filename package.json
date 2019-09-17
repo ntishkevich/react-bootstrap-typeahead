@@ -19,7 +19,7 @@
     "postpublish": "npm run deploy-example",
     "prepublishOnly": "npm run check && npm run build",
     "start": "webpack --mode development -w --progress --config example/webpack.config.js",
-    "test": "karma start"
+    "test": "node scripts/test.js --env=jsdom --config config/jest/config.js"
   },
   "keywords": [
     "auto complete",
@@ -61,8 +61,8 @@
     "warning": "^4.0.1"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.2.0 || ^16.0.0",
-    "react-dom": "^0.14.0 || ^15.2.0 || ^16.0.0"
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -90,16 +90,12 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "gh-pages": "^2.0.1",
     "isomorphic-fetch": "^2.2.1",
+    "jest": "^24.9.0",
+    "jest-runner-eslint": "^0.7.4",
     "json-loader": "^0.5.4",
-    "karma": "^4.3.0",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-mocha": "^1.1.1",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^4.0.0-rc.2",
     "marked": "^0.7.0",
-    "mocha": "^6.2.0",
     "node-sass": "^4.5.3",
+    "raf": "^3.4.1",
     "raw-loader": "^3.1.0",
     "react": "^16.5.0",
     "react-bootstrap": "^0.32.1",
@@ -115,6 +111,11 @@
     "uglifyjs-webpack-plugin": "^2.0.0",
     "webpack": "^4.6.0",
     "webpack-cli": "^3.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./config/eslint/config.js"
+    ]
   },
   "repository": {
     "type": "git",

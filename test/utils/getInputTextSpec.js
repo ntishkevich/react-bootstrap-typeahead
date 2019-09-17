@@ -1,5 +1,3 @@
-import {expect} from 'chai';
-
 import getInputText from '../../src/utils/getInputText';
 import options from '../../example/exampleData';
 
@@ -15,7 +13,7 @@ const baseArgs = {
 describe('getInputText', () => {
   it('returns an empty string when no text is entered', () => {
     const inputText = getInputText(baseArgs);
-    expect(inputText).to.equal('');
+    expect(inputText).toEqual('');
   });
 
   it('returns the input text in multiple mode', () => {
@@ -26,7 +24,7 @@ describe('getInputText', () => {
       text,
     });
 
-    expect(inputText).to.equal(text);
+    expect(inputText).toEqual(text);
   });
 
   it('returns the active option label in single-select mode', () => {
@@ -36,7 +34,7 @@ describe('getInputText', () => {
       activeItem: {name},
     });
 
-    expect(inputText).to.equal(name);
+    expect(inputText).toEqual(name);
   });
 
   it('returns the active option label in multi-select mode', () => {
@@ -47,7 +45,7 @@ describe('getInputText', () => {
       multiple: true,
     });
 
-    expect(inputText).to.equal(name);
+    expect(inputText).toEqual(name);
   });
 
   it('returns the input text if the pagination item is active', () => {
@@ -60,13 +58,13 @@ describe('getInputText', () => {
       text: 'foo',
     };
 
-    expect(getInputText(args)).to.equal('foo');
+    expect(getInputText(args)).toEqual('foo');
   });
 
   it('returns the selected item label in single-select mode', () => {
     const selected = options.slice(0, 1);
     const inputText = getInputText({...baseArgs, selected});
-    expect(inputText).to.equal(selected[0][labelKey]);
+    expect(inputText).toEqual(selected[0][labelKey]);
   });
 
   it('does not return the selected item label in multi-select mode', () => {
@@ -76,6 +74,6 @@ describe('getInputText', () => {
       selected: options.slice(0, 1),
     });
 
-    expect(inputText).to.equal('');
+    expect(inputText).toEqual('');
   });
 });

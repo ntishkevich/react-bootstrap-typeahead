@@ -1,14 +1,14 @@
-import cx from 'classnames';
+import React, {Children, Component} from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {isRequiredForA11y} from 'prop-types-extra';
-import React, {Children} from 'react';
 
-import {BaseMenuItem} from './MenuItem.react';
+import {BaseMenuItem} from './MenuItem';
 
 /**
  * Menu component that handles empty state when passed a set of results.
  */
-class Menu extends React.Component {
+class Menu extends Component {
   componentDidUpdate(prevProps, prevState) {
     const {inputHeight, scheduleUpdate} = this.props;
 
@@ -77,7 +77,7 @@ Menu.defaultProps = {
   maxHeight: '300px',
 };
 
-Menu.Divider = (props) => (
+Menu.Divider = () => (
   <li className="divider dropdown-divider" role="separator" />
 );
 

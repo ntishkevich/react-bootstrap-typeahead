@@ -1,5 +1,5 @@
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 const SIZER_STYLE = {
   height: 0,
@@ -40,7 +40,7 @@ const copyStyles = (styles, node) => {
   /* eslint-enable no-param-reassign */
 };
 
-class AutosizeInput extends React.Component {
+class AutosizeInput extends Component {
   state = {
     inputWidth: MIN_WIDTH,
   };
@@ -49,7 +49,7 @@ class AutosizeInput extends React.Component {
     this._updateInputWidth();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     this._updateInputWidth();
   }
 

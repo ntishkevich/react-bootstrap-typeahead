@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 
-import cx from 'classnames';
 import React from 'react';
+import cx from 'classnames';
 
 import {getDisplayName, getInputText, getMenuItemId} from '../utils';
 

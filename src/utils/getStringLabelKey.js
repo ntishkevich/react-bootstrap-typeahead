@@ -1,5 +1,5 @@
-import {DEFAULT_LABELKEY} from '../constants';
+import {DEFAULT_LABEL_KEY} from '../constants';
 
 export default function getStringLabelKey(labelKey) {
-  return typeof labelKey === 'string' ? labelKey : DEFAULT_LABELKEY;
+  return typeof labelKey === 'string' ? labelKey : DEFAULT_LABEL_KEY;
 }

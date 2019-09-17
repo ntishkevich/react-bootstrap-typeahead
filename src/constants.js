@@ -12,4 +12,4 @@ export const UP = 38;
 export const RIGHT = 39;
 export const DOWN = 40;
 
-export const DEFAULT_LABELKEY = 'label';
+export const DEFAULT_LABEL_KEY = 'label';

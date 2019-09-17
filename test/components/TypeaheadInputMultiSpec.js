@@ -1,9 +1,8 @@
-import {expect} from 'chai';
 import {mount} from 'enzyme';
 import {head, noop} from 'lodash';
 import React from 'react';
 
-import TypeaheadInputMulti from '../../src/TypeaheadInputMulti.react';
+import TypeaheadInputMulti from '../../src/TypeaheadInputMulti';
 import contextContainer from '../../src/containers/contextContainer';
 
 import options from '../../example/exampleData';
@@ -38,17 +37,17 @@ describe('<TypeaheadInputMulti>', () => {
   it('renders a multi-select input', () => {
     const input = wrapper.find('.form-control');
 
-    expect(input.length).to.equal(1);
-    expect(input.hasClass('rbt-input')).to.equal(true);
-    expect(input.hasClass('rbt-input-multi')).to.equal(true);
+    expect(input).toHaveLength(1);
+    expect(input.hasClass('rbt-input')).toEqual(true);
+    expect(input.hasClass('rbt-input-multi')).toEqual(true);
   });
 
   it('displays the selected text', () => {
-    expect(getInput(wrapper).prop('value')).to.equal(text);
+    expect(getInput(wrapper).prop('value')).toEqual(text);
   });
 
   it('renders a multi-select input with tokens', () => {
-    expect(getTokens(wrapper).length).to.equal(3);
+    expect(getTokens(wrapper)).toHaveLength(3);
   });
 
   it('displays a hint', () => {
@@ -61,7 +60,7 @@ describe('<TypeaheadInputMulti>', () => {
       text: 'Al',
     });
 
-    expect(getHint(wrapper)).to.equal(initialItem.name);
+    expect(getHint(wrapper)).toEqual(initialItem.name);
   });
 
   it('renders with validation classnames', () => {
@@ -72,7 +71,7 @@ describe('<TypeaheadInputMulti>', () => {
 
     const input = wrapper.find('.form-control');
 
-    expect(input.hasClass('is-invalid')).to.equal(true);
-    expect(input.hasClass('is-valid')).to.equal(true);
+    expect(input.hasClass('is-invalid')).toEqual(true);
+    expect(input.hasClass('is-valid')).toEqual(true);
   });
 });

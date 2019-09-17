@@ -1,10 +1,9 @@
-import {expect} from 'chai';
-
 import addCustomOption from '../../src/utils/addCustomOption';
 import options from '../../example/exampleData';
 
 describe('addCustomOption', () => {
-  let defaultProps, labelKey;
+  let defaultProps;
+  let labelKey;
 
   beforeEach(() => {
     labelKey = 'name';
@@ -20,7 +19,7 @@ describe('addCustomOption', () => {
       ...defaultProps,
       allowNew: false,
     };
-    expect(addCustomOption(options, props)).to.equal(false);
+    expect(addCustomOption(options, props)).toEqual(false);
   });
 
   it('does not add a custom option when no text is entered', () => {
@@ -28,11 +27,11 @@ describe('addCustomOption', () => {
       ...defaultProps,
       text: '',
     };
-    expect(addCustomOption(options, props)).to.equal(false);
+    expect(addCustomOption(options, props)).toEqual(false);
   });
 
   it('adds a custom option if no matches are found', () => {
-    expect(addCustomOption(options, defaultProps)).to.equal(true);
+    expect(addCustomOption(options, defaultProps)).toEqual(true);
   });
 
   it('adds a custom option when `labelKey` is a function', () => {
@@ -40,17 +39,17 @@ describe('addCustomOption', () => {
       ...defaultProps,
       labelKey: (o) => o.name,
     };
-    expect(addCustomOption(options, props)).to.equal(true);
+    expect(addCustomOption(options, props)).toEqual(true);
   });
 
   it('adds a custom option when no exact matches are found', () => {
     const props = {...defaultProps, text: 'Ala'};
-    expect(addCustomOption(options, props)).to.equal(true);
+    expect(addCustomOption(options, props)).toEqual(true);
   });
 
   it('does not add a custom option when an exact match is found', () => {
     const props = {...defaultProps, text: 'Wyoming'};
-    expect(addCustomOption(options, props)).to.equal(false);
+    expect(addCustomOption(options, props)).toEqual(false);
   });
 
   it('adds a custom option when `allowNew` returns true', () => {
@@ -59,7 +58,7 @@ describe('addCustomOption', () => {
       allowNew: () => true,
       text: 'North Carolina', // Would otherwise return false
     };
-    expect(addCustomOption(options, props)).to.equal(true);
+    expect(addCustomOption(options, props)).toEqual(true);
   });
 
   it('does not add a custom option when `allowNew` returns false', () => {
@@ -68,6 +67,6 @@ describe('addCustomOption', () => {
       allowNew: () => false,
       text: 'xxx', // Would otherwise return true
     };
-    expect(addCustomOption(options, props)).to.equal(false);
+    expect(addCustomOption(options, props)).toEqual(false);
   });
 });

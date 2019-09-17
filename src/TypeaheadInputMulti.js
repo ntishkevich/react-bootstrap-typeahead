@@ -2,8 +2,8 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import AutosizeInput from './AutosizeInput.react';
-import Token from './Token.react';
+import AutosizeInput from './AutosizeInput';
+import Token from './Token';
 
 import {getOptionLabel, isSelectable} from './utils';
 import hintContainer from './containers/hintContainer';

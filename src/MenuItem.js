@@ -1,10 +1,20 @@
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {noop} from 'lodash';
-import React from 'react';
 
 import menuItemContainer from './containers/menuItemContainer';
 
-class BaseMenuItem extends React.Component {
+class BaseMenuItem extends Component {
+  handleClick = (e) => {
+    const {disabled, onClick} = this.props;
+
+    e.preventDefault();
+    if (!disabled) {
+      onClick(e);
+    }
+  };
+
   render() {
     const {
       active,
@@ -29,7 +39,7 @@ class BaseMenuItem extends React.Component {
         <a
           className={cx('dropdown-item', conditionalClassNames)}
           href="#"
-          onClick={this._handleClick}
+          onClick={this.handleClick}
           onMouseDown={onMouseDown}>
           {children}
         </a>
@@ -37,17 +47,14 @@ class BaseMenuItem extends React.Component {
       /* eslint-enable jsx-a11y/anchor-is-valid */
     );
   }
-
-  _handleClick = (e) => {
-    const {disabled, onClick} = this.props;
-
-    e.preventDefault();
-    !disabled && onClick(e);
-  }
 }
 
 BaseMenuItem.defaultProps = {
   onClick: noop,
+};
+
+BaseMenuItem.propTypes = {
+  onClick: PropTypes.func,
 };
 
 export {BaseMenuItem};

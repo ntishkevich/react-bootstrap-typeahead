@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AutosizeInput from '../AutosizeInput.react';
+import AutosizeInput from '../AutosizeInput';
 import {withContext} from '../TypeaheadContext';
 
 import {getDisplayName, shouldSelectHint} from '../utils';
@@ -40,6 +40,17 @@ function hintContainer(Input) {
 
     componentDidUpdate() {
       copyStyles(this._input, this._hint);
+    }
+
+    handleKeyDown = (e) => {
+      const {initialItem, onAdd, onKeyDown} = this.props;
+
+      if (shouldSelectHint(e, this.props)) {
+        e.preventDefault(); // Prevent input from blurring on TAB.
+        onAdd(initialItem);
+      }
+
+      onKeyDown(e);
     }
 
     render() {
@@ -86,17 +97,6 @@ function hintContainer(Input) {
           />
         </div>
       );
-    }
-
-    _handleKeyDown = (e) => {
-      const {initialItem, onAdd, onKeyDown} = this.props;
-
-      if (shouldSelectHint(e, this.props)) {
-        e.preventDefault(); // Prevent input from blurring on TAB.
-        onAdd(initialItem);
-      }
-
-      onKeyDown(e);
     }
   }
 

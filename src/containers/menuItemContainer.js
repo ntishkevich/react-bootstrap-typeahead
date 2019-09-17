@@ -15,35 +15,6 @@ const menuItemContainer = (Component) => {
       this._maybeUpdateItem();
     }
 
-    render() {
-      const {
-        activeIndex,
-        isOnlyResult,
-        label,
-        onActiveItemChange,
-        onInitialItemChange,
-        onMenuItemClick,
-        option,
-        position,
-        ...props
-      } = this.props;
-
-      const active = isOnlyResult || activeIndex === position;
-
-      return (
-        <Component
-          {...props}
-          active={active}
-          aria-label={label}
-          aria-selected={active}
-          id={getMenuItemId(position)}
-          onClick={this._handleClick}
-          onMouseDown={preventInputBlur}
-          role="option"
-        />
-      );
-    }
-
     _handleClick = (e) => {
       const {onMenuItemClick, option, onClick} = this.props;
 
@@ -71,6 +42,35 @@ const menuItemContainer = (Component) => {
         scrollIntoViewIfNeeded(findDOMNode(this));
         onActiveItemChange(option);
       }
+    }
+
+    render() {
+      const {
+        activeIndex,
+        isOnlyResult,
+        label,
+        onActiveItemChange,
+        onInitialItemChange,
+        onMenuItemClick,
+        option,
+        position,
+        ...props
+      } = this.props;
+
+      const active = isOnlyResult || activeIndex === position;
+
+      return (
+        <Component
+          {...props}
+          active={active}
+          aria-label={label}
+          aria-selected={active}
+          id={getMenuItemId(position)}
+          onClick={this._handleClick}
+          onMouseDown={preventInputBlur}
+          role="option"
+        />
+      );
     }
   }
 

@@ -1,9 +1,9 @@
-import {expect} from 'chai';
+
 import {mount} from 'enzyme';
 import {head, noop} from 'lodash';
 import React from 'react';
 
-import TypeaheadInputSingle from '../../src/TypeaheadInputSingle.react';
+import TypeaheadInputSingle from '../../src/TypeaheadInputSingle';
 import contextContainer from '../../src/containers/contextContainer';
 
 import options from '../../example/exampleData';
@@ -36,9 +36,9 @@ describe('<TypeaheadInputSingle>', () => {
   it('renders a single-select input', () => {
     const input = wrapper.find('.form-control');
 
-    expect(input.length).to.equal(1);
-    expect(input.hasClass('rbt-input')).to.equal(true);
-    expect(input.hasClass('rbt-input-main')).to.equal(true);
+    expect(input).toHaveLength(1);
+    expect(input.hasClass('rbt-input')).toEqual(true);
+    expect(input.hasClass('rbt-input-main')).toEqual(true);
   });
 
   it('displays the selected text', () => {
@@ -46,7 +46,7 @@ describe('<TypeaheadInputSingle>', () => {
 
     wrapper.setProps({text});
 
-    expect(getInput(wrapper).prop('value')).to.equal(text);
+    expect(getInput(wrapper).prop('value')).toEqual(text);
   });
 
   it('displays a hint', () => {
@@ -59,7 +59,7 @@ describe('<TypeaheadInputSingle>', () => {
       text: 'Al',
     });
 
-    expect(getHint(wrapper)).to.equal(initialItem.name);
+    expect(getHint(wrapper)).toEqual(initialItem.name);
   });
 
   it('renders with validation classnames', () => {
@@ -70,7 +70,7 @@ describe('<TypeaheadInputSingle>', () => {
 
     const input = wrapper.find('.form-control');
 
-    expect(input.hasClass('is-invalid')).to.equal(true);
-    expect(input.hasClass('is-valid')).to.equal(true);
+    expect(input.hasClass('is-invalid')).toEqual(true);
+    expect(input.hasClass('is-valid')).toEqual(true);
   });
 });

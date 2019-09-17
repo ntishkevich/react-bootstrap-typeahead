@@ -1,4 +1,3 @@
-import {expect} from 'chai';
 import {range} from 'lodash';
 
 import shouldSelectHint from '../../src/utils/shouldSelectHint';
@@ -21,11 +20,11 @@ describe('shouldSelectHint', () => {
 
   it('returns false when there is no hint', () => {
     props.hintText = '';
-    expect(shouldSelectHint(event, props)).to.equal(false);
+    expect(shouldSelectHint(event, props)).toEqual(false);
   });
 
   it('returns true when tab is pressed', () => {
-    expect(shouldSelectHint(event, props)).to.equal(true);
+    expect(shouldSelectHint(event, props)).toEqual(true);
   });
 
   it('behavior when the right arrow key is pressed', () => {
@@ -36,13 +35,13 @@ describe('shouldSelectHint', () => {
       },
     };
 
-    expect(shouldSelectHint(event, props)).to.equal(false);
+    expect(shouldSelectHint(event, props)).toEqual(false);
 
     event.target.selectionStart = 4;
-    expect(shouldSelectHint(event, props)).to.equal(true);
+    expect(shouldSelectHint(event, props)).toEqual(true);
 
     event.target.selectionStart = null;
-    expect(shouldSelectHint(event, props)).to.equal(true);
+    expect(shouldSelectHint(event, props)).toEqual(true);
   });
 
   it('behavior when enter is pressed', () => {
@@ -50,10 +49,10 @@ describe('shouldSelectHint', () => {
       keyCode: RETURN,
     };
 
-    expect(shouldSelectHint(event, props)).to.equal(false);
+    expect(shouldSelectHint(event, props)).toEqual(false);
 
     props.selectHintOnEnter = true;
-    expect(shouldSelectHint(event, props)).to.equal(true);
+    expect(shouldSelectHint(event, props)).toEqual(true);
   });
 
   it('returns false for other keycodes', () => {
@@ -73,7 +72,7 @@ describe('shouldSelectHint', () => {
       ))
       .forEach((keyCode) => {
         event.keyCode = keyCode;
-        expect(shouldSelectHint(event, props)).to.equal(false);
+        expect(shouldSelectHint(event, props)).toEqual(false);
       });
   });
 });

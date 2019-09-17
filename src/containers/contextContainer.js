@@ -16,6 +16,22 @@ function contextContainer(Typeahead) {
       }
     }
 
+    _handleKeyDown = (e) => {
+      const {initialItem, onKeyDown, onAdd} = this.props;
+
+      switch (e.keyCode) {
+        case RETURN:
+          if (getIsOnlyResult(this.props) && initialItem) {
+            onAdd(initialItem);
+          }
+          break;
+        default:
+          break;
+      }
+
+      onKeyDown(e);
+    };
+
     render() {
       const contextValues = pick(this.props, [
         'activeIndex',
@@ -40,22 +56,6 @@ function contextContainer(Typeahead) {
           />
         </TypeaheadContext.Provider>
       );
-    }
-
-    _handleKeyDown = (e) => {
-      const {initialItem, onKeyDown, onAdd} = this.props;
-
-      switch (e.keyCode) {
-        case RETURN:
-          if (getIsOnlyResult(this.props) && initialItem) {
-            onAdd(initialItem);
-          }
-          break;
-        default:
-          break;
-      }
-
-      onKeyDown(e);
     }
   }
 

@@ -1,0 +1,14 @@
+root = true
+
+[*]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[{*.js, *.jsx}]
+max_line_length = 100
+ij_javascript_import_sort_module_name = true
+ij_javascript_spaces_within_imports = true

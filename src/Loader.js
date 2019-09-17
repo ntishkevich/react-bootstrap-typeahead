@@ -1,6 +1,6 @@
-import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 const Loader = ({bsSize}) => (
   <div
@@ -10,6 +10,9 @@ const Loader = ({bsSize}) => (
     })}
   />
 );
+Loader.defaultProps = {
+  bsSize: 'sm',
+};
 
 Loader.propTypes = {
   bsSize: PropTypes.oneOf(['large', 'lg', 'small', 'sm']),

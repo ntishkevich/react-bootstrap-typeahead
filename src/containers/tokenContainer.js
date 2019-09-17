@@ -14,24 +14,9 @@ const tokenContainer = (Component) => {
       active: false,
     };
 
-    render() {
-      return (
-        <RootCloseWrapper onRootClose={this._handleBlur}>
-          <Component
-            {...this.props}
-            {...this.state}
-            onBlur={this._handleBlur}
-            onClick={this._handleActive}
-            onFocus={this._handleActive}
-            onKeyDown={this._handleKeyDown}
-          />
-        </RootCloseWrapper>
-      );
-    }
-
     _handleBlur = (e) => {
       this.setState({active: false});
-    }
+    };
 
     _handleKeyDown = (e) => {
       switch (e.keyCode) {
@@ -46,11 +31,26 @@ const tokenContainer = (Component) => {
         default:
           break;
       }
-    }
+    };
 
     _handleActive = (e) => {
       e.stopPropagation();
       this.setState({active: true});
+    };
+
+    render() {
+      return (
+        <RootCloseWrapper onRootClose={this._handleBlur}>
+          <Component
+            {...this.props}
+            {...this.state}
+            onBlur={this._handleBlur}
+            onClick={this._handleActive}
+            onFocus={this._handleActive}
+            onKeyDown={this._handleKeyDown}
+          />
+        </RootCloseWrapper>
+      );
     }
   }
 

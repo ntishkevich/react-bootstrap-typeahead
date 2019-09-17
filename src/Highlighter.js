@@ -1,5 +1,5 @@
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import {getMatchBounds} from './utils';
 
@@ -9,18 +9,10 @@ import {getMatchBounds} from './utils';
  * Results are already filtered by the time the component is used internally so
  * we can safely ignore case and diacritical marks for the purposes of matching.
  */
-class Highlighter extends React.Component {
+class Highlighter extends Component {
   _count = 0;
 
-  render() {
-    const children = this.props.search ?
-      this._renderHighlightedChildren() :
-      this.props.children;
-
-    return <span>{children}</span>;
-  }
-
-  _renderHighlightedChildren() {
+  renderHighlightedChildren() {
     const children = [];
     let remaining = this.props.children;
 
@@ -64,6 +56,15 @@ class Highlighter extends React.Component {
     }
 
     return children;
+  }
+
+  render() {
+    const {search, children: childArray} = this.props;
+    const children = search ?
+      this.renderHighlightedChildren() :
+      childArray;
+
+    return <span>{children}</span>;
   }
 }
 

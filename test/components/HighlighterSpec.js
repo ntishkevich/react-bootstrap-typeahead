@@ -1,8 +1,8 @@
-import {expect} from 'chai';
+
 import {shallow} from 'enzyme';
 import React from 'react';
 
-import Highlighter from '../../src/Highlighter.react';
+import Highlighter from '../../src/Highlighter';
 
 describe('<Highlighter>', () => {
   let highlighter, matches;
@@ -16,9 +16,9 @@ describe('<Highlighter>', () => {
   });
 
   it('renders a span containing a string', () => {
-    expect(highlighter.type()).to.equal('span');
-    expect(highlighter.text()).to.equal('California');
-    expect(highlighter.find('mark')).to.have.length(0);
+    expect(highlighter.type()).toEqual('span');
+    expect(highlighter.text()).toEqual('California');
+    expect(highlighter.find('mark')).toHaveLength(0);
   });
 
   it('correctly highlights text', () => {
@@ -26,13 +26,13 @@ describe('<Highlighter>', () => {
       .setProps({search: 'a'})
       .find('mark');
 
-    expect(matches.length).to.equal(2);
-    expect(matches.first().text()).to.equal('a');
+    expect(matches).toHaveLength(2);
+    expect(matches.first().text()).toEqual('a');
   });
 
   it('does not highlight text when there is no match', () => {
     highlighter.setProps({search: 'x'});
-    expect(highlighter.find('mark')).to.have.length(0);
+    expect(highlighter.find('mark')).toHaveLength(0);
   });
 
   it('is case-insensitive', () => {
@@ -40,8 +40,8 @@ describe('<Highlighter>', () => {
       .setProps({search: 'cal'})
       .find('mark');
 
-    expect(matches.length).to.equal(1);
-    expect(matches.first().text()).to.equal('Cal');
+    expect(matches).toHaveLength(1);
+    expect(matches.first().text()).toEqual('Cal');
   });
 
   it('ignores diacritical marks', () => {
@@ -52,7 +52,7 @@ describe('<Highlighter>', () => {
       })
       .find('mark');
 
-    expect(matches.length).to.equal(1);
-    expect(matches.first().text()).to.equal('Krakó');
+    expect(matches).toHaveLength(1);
+    expect(matches.first().text()).toEqual('Krakó');
   });
 });

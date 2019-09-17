@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 
-import ClearButton from './ClearButton.react';
-import Loader from './Loader.react';
-import Overlay from './Overlay.react';
-import TypeaheadInputMulti from './TypeaheadInputMulti.react';
-import TypeaheadInputSingle from './TypeaheadInputSingle.react';
-import TypeaheadMenu from './TypeaheadMenu.react';
+import ClearButton from './ClearButton';
+import Loader from './Loader';
+import Overlay from './Overlay';
+import TypeaheadInputMulti from './TypeaheadInputMulti';
+import TypeaheadInputSingle from './TypeaheadInputSingle';
+import TypeaheadMenu from './TypeaheadMenu';
 
 import typeaheadContainer from './containers/typeaheadContainer';
 import {getAccessibilityStatus, preventInputBlur} from './utils';

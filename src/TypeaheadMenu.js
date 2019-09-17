@@ -1,30 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import Highlighter from './Highlighter.react';
+import Highlighter from './Highlighter';
 import Menu from './Menu.react';
-import MenuItem from './MenuItem.react';
+import MenuItem from './MenuItem';
 
 import {getOptionLabel} from './utils';
 
-class TypeaheadMenu extends React.Component {
-  render() {
-    const {
-      labelKey,
-      newSelectionPrefix,
-      options,
-      renderMenuItemChildren,
-      ...menuProps
-    } = this.props;
-
-    return (
-      <Menu {...menuProps}>
-        {options.map(this._renderMenuItem)}
-      </Menu>
-    );
-  }
-
-  _renderMenuItem = (option, idx) => {
+class TypeaheadMenu extends Component {
+  renderMenuItem = (option, idx) => {
     const {
       labelKey,
       newSelectionPrefix,
@@ -73,8 +57,33 @@ class TypeaheadMenu extends React.Component {
         {renderMenuItemChildren(option, this.props, idx)}
       </MenuItem>
     );
+  };
+
+  render() {
+    const {
+      labelKey,
+      newSelectionPrefix,
+      options,
+      renderMenuItemChildren,
+      ...menuProps
+    } = this.props;
+
+    return (
+      <Menu {...menuProps}>
+        {options.map(this.renderMenuItem)}
+      </Menu>
+    );
   }
 }
+
+TypeaheadMenu.defaultProps = {
+  newSelectionPrefix: 'New selection: ',
+  renderMenuItemChildren: (option, props) => (
+    <Highlighter search={props.text}>
+      {getOptionLabel(option, props.labelKey)}
+    </Highlighter>
+  ),
+};
 
 TypeaheadMenu.propTypes = {
   /**
@@ -86,15 +95,6 @@ TypeaheadMenu.propTypes = {
    * Provides a hook for customized rendering of menu item contents.
    */
   renderMenuItemChildren: PropTypes.func,
-};
-
-TypeaheadMenu.defaultProps = {
-  newSelectionPrefix: 'New selection: ',
-  renderMenuItemChildren: (option, props, idx) => (
-    <Highlighter search={props.text}>
-      {getOptionLabel(option, props.labelKey)}
-    </Highlighter>
-  ),
 };
 
 

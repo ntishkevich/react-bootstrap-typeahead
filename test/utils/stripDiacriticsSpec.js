@@ -1,4 +1,3 @@
-import {expect} from 'chai';
 import {range} from 'lodash';
 
 import stripDiacritics from '../../src/utils/stripDiacritics';
@@ -10,7 +9,7 @@ describe('stripDiacritics', () => {
     const result = 'AEDEEOESaeeeoelsABCDDEHIKLOOSSTTTUUYabcddehikloosstttuuyAAAAAAAAAAAAEAEAEBCCCCCDDDDDEEEEEEEEEEEEGGGGGaaaaaaaaaaaaeaeaebcccccddddeeeeeeeeeegggggHHHIIIIIIIIIIIIJKKLLLLLNNNNNOOOOOOOOOOOOOOEhhhiiiiiiiiiiiijkkĸlllllnnnnnooooooooooooooeRRRSSSSSSSTTTTUUUUUUUUUUUUUWWWWYYYYYYYZZZZrrrlsssssssttttuuuuuuuuuuuuuwwwwyyyyyyyzzzz';
     /* eslint-enable max-len */
 
-    expect(stripDiacritics(string)).to.equal(result);
+    expect(stripDiacritics(string)).toEqual(result);
   });
 
   it('removes combining diacritical marks from a string', () => {
@@ -31,7 +30,7 @@ describe('stripDiacritics', () => {
       .map((n) => String.fromCharCode(`0x0${n}`))
       .join('');
 
-    expect(str.length).to.equal(112);
-    expect(stripDiacritics(str)).to.equal('');
+    expect(str).toHaveLength(112);
+    expect(stripDiacritics(str)).toEqual('');
   });
 });

@@ -1,5 +1,3 @@
-import {expect} from 'chai';
-
 import isShown from '../../src/utils/isShown';
 import options from '../../example/exampleData';
 
@@ -12,11 +10,11 @@ const baseProps = {
 
 describe('isShown', () => {
   it('shows the menu', () => {
-    expect(isShown(options, {...baseProps, showMenu: true})).to.equal(true);
+    expect(isShown(options, {...baseProps, showMenu: true})).toEqual(true);
   });
 
   it('shows the menu when `open` is true', () => {
-    expect(isShown(options, {...baseProps, open: true})).to.equal(true);
+    expect(isShown(options, {...baseProps, open: true})).toEqual(true);
   });
 
   it('hides the menu when `open` is false', () => {
@@ -26,11 +24,11 @@ describe('isShown', () => {
       showMenu: true,
     };
 
-    expect(isShown(options, props)).to.equal(false);
+    expect(isShown(options, props)).toEqual(false);
   });
 
   it('hides the menu when `showMenu` is false', () => {
-    expect(isShown(options, baseProps)).to.equal(false);
+    expect(isShown(options, baseProps)).toEqual(false);
   });
 
   it('hides the menu when the input value is less than `minLength`', () => {
@@ -40,10 +38,10 @@ describe('isShown', () => {
       showMenu: true,
     };
 
-    expect(isShown(options, props)).to.equal(false);
+    expect(isShown(options, props)).toEqual(false);
   });
 
   it('hides the menu when there are no results and no empty label', () => {
-    expect(isShown([], {...baseProps, emptyLabel: ''})).to.equal(false);
+    expect(isShown([], {...baseProps, emptyLabel: ''})).toEqual(false);
   });
 });

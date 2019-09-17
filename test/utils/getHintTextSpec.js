@@ -1,5 +1,3 @@
-import {expect} from 'chai';
-
 import getHintText from '../../src/utils/getHintText';
 import states from '../../example/exampleData';
 
@@ -17,32 +15,32 @@ const props = {
 describe('getHintText', () => {
   it('returns a case-sensitive hint string', () => {
     const hintText = getHintText(props);
-    expect(hintText).to.equal('alAbama');
+    expect(hintText).toEqual('alAbama');
   });
 
   it('returns an empty string when the text is empty', () => {
     const hintText = getHintText({...props, text: ''});
-    expect(hintText).to.equal('');
+    expect(hintText).toEqual('');
   });
 
   it('returns an empty string when the menu is not focused', () => {
     const hintText = getHintText({...props, isFocused: false});
-    expect(hintText).to.equal('');
+    expect(hintText).toEqual('');
   });
 
   it('returns an empty string when a menu item is active', () => {
     const hintText = getHintText({...props, activeItem: props.initialItem});
-    expect(hintText).to.equal('');
+    expect(hintText).toEqual('');
   });
 
   it('returns an empty string when there is a selection', () => {
     const hintText = getHintText({...props, selected: [states[0]]});
-    expect(hintText).to.equal('');
+    expect(hintText).toEqual('');
   });
 
   it('returns an empty string when the menu is hidden', () => {
     const hintText = getHintText({...props, isMenuShown: false});
-    expect(hintText).to.equal('');
+    expect(hintText).toEqual('');
   });
 
   it(
@@ -50,14 +48,14 @@ describe('getHintText', () => {
     'input string',
     () => {
       const hintText = getHintText({...props, text: 'Cal'});
-      expect(hintText).to.equal('');
+      expect(hintText).toEqual('');
     }
   );
 
   it('returns an empty string when the initial item is a custom option', () => {
     const initialItem = {...props.initialItem, customOption: true};
     const hintText = getHintText({...props, initialItem});
-    expect(hintText).to.equal('');
+    expect(hintText).toEqual('');
   });
 
   it('handles string with composed diacritical marks', () => {
@@ -66,7 +64,7 @@ describe('getHintText', () => {
       initialItem: 'Schön ist, was schön lässt.',
       text: 'schon is',
     });
-    expect(hintText).to.equal('schon ist, was schön lässt.');
+    expect(hintText).toEqual('schon ist, was schön lässt.');
   });
 
   it('handles string with combined diacritical marks', () => {
@@ -75,6 +73,6 @@ describe('getHintText', () => {
       initialItem: 'Scho\u0308n ist, was scho\u0308n la\u0308sst.',
       text: 'schon is',
     });
-    expect(hintText).to.equal('schon ist, was scho\u0308n la\u0308sst.');
+    expect(hintText).toEqual('schon ist, was scho\u0308n la\u0308sst.');
   });
 });

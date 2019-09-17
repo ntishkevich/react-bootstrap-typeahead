@@ -1,10 +1,8 @@
-import {expect} from 'chai';
 import {mount, shallow} from 'enzyme';
 import {noop, pick} from 'lodash';
 import React from 'react';
-import sinon from 'sinon';
 
-import MenuItem, {BaseMenuItem} from '../../src/MenuItem.react';
+import MenuItem, {BaseMenuItem} from '../../src/MenuItem';
 import contextContainer from '../../src/containers/contextContainer';
 import {context} from '../helpers';
 
@@ -18,7 +16,7 @@ describe('<BaseMenuItem>', () => {
   let baseMenuItem, onClick;
 
   beforeEach(() => {
-    onClick = sinon.spy();
+    onClick = jest.fn();
     baseMenuItem = shallow(
       <BaseMenuItem onClick={onClick}>
         This is a base menu item.
@@ -27,26 +25,26 @@ describe('<BaseMenuItem>', () => {
   });
 
   it('renders a base menu item', () => {
-    expect(baseMenuItem).to.not.equal(undefined);
-    expect(baseMenuItem.type()).to.equal('li');
+    expect(baseMenuItem).not.toBeUndefined();
+    expect(baseMenuItem.type()).toEqual('li');
   });
 
   it('renders an active base menu item', () => {
     baseMenuItem.setProps({active: true});
-    expect(baseMenuItem.hasClass('active')).to.equal(true);
+    expect(baseMenuItem.hasClass('active')).toEqual(true);
   });
 
   it('triggers an event when clicked', () => {
     baseMenuItem.find('a').simulate('click', event);
-    expect(onClick.calledOnce).to.equal(true);
+    expect(onClick.calledOnce).toEqual(true);
   });
 
   it('renders a disabled base menu item', () => {
     baseMenuItem.setProps({disabled: true});
     baseMenuItem.find('a').simulate('click', event);
 
-    expect(baseMenuItem.hasClass('disabled')).to.equal(true);
-    expect(onClick.notCalled).to.equal(true);
+    expect(baseMenuItem.hasClass('disabled')).toEqual(true);
+    expect(onClick.notCalled).toEqual(true);
   });
 });
 
@@ -63,7 +61,7 @@ describe('<MenuItem>', () => {
       'results',
     ]);
 
-    onClick = sinon.spy();
+    onClick = jest.fn();
     menuItem = mount(
       <MenuItemWithContext
         {...contextProps}
@@ -76,29 +74,29 @@ describe('<MenuItem>', () => {
   });
 
   it('renders a menu item', () => {
-    expect(menuItem).to.not.equal(undefined);
-    expect(menuItem.find('a')).to.have.length(1);
+    expect(menuItem).not.toBeUndefined();
+    expect(menuItem.find('a')).toHaveLength(1);
   });
 
   it('changes the active state of the menu item', () => {
-    expect(menuItem.hasClass('active')).to.equal(false);
+    expect(menuItem.hasClass('active')).toEqual(false);
 
     menuItem.setProps({activeIndex: 0});
-    expect(menuItem.find('a').hasClass('active')).to.equal(true);
+    expect(menuItem.find('a').hasClass('active')).toEqual(true);
   });
 
   it('sets the active state if it is the only result', () => {
-    expect(menuItem.hasClass('active')).to.equal(false);
+    expect(menuItem.hasClass('active')).toEqual(false);
 
     menuItem.setProps({
       highlightOnlyResult: true,
       results: ['test'],
     });
-    expect(menuItem.find('a').hasClass('active')).to.equal(true);
+    expect(menuItem.find('a').hasClass('active')).toEqual(true);
   });
 
   it('triggers an event when clicked', () => {
     menuItem.find('a').simulate('click', event);
-    expect(onClick.calledOnce).to.equal(true);
+    expect(onClick.mock.calls).toBeTruthy();
   });
 });

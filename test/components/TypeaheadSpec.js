@@ -1,9 +1,7 @@
-import {expect} from 'chai';
 import {mount} from 'enzyme';
 import {head, noop} from 'lodash';
 import React from 'react';
 import {Popper} from 'react-popper';
-import sinon from 'sinon';
 
 import {Menu, MenuItem, Typeahead} from '../../src';
 
@@ -70,12 +68,12 @@ describe('<Typeahead>', () => {
   });
 
   it('should have an input', () => {
-    expect(typeahead.find('input.rbt-input-main')).to.have.length(1);
+    expect(typeahead.find('input.rbt-input-main')).toHaveLength(1);
   });
 
   it('should render in multi-select mode when `multiple=true`', () => {
     typeahead.setProps({multiple: true});
-    expect(typeahead.find('.rbt-input-multi')).to.have.length(1);
+    expect(typeahead.find('.rbt-input-multi')).toHaveLength(1);
   });
 
   it('should display tokens when selections are passed in', () => {
@@ -83,19 +81,19 @@ describe('<Typeahead>', () => {
       multiple: true,
       selected: states.slice(0, 3),
     });
-    expect(getTokens(typeahead)).to.have.length(3);
+    expect(getTokens(typeahead)).toHaveLength(3);
   });
 
   it('sets and unsets the focus state on focus/blur', () => {
     const input = getInput(typeahead);
 
-    expect(hasFocus(typeahead)).to.equal(false);
+    expect(hasFocus(typeahead)).toEqual(false);
 
     input.simulate('focus');
-    expect(hasFocus(typeahead)).to.equal(true);
+    expect(hasFocus(typeahead)).toEqual(true);
 
     input.simulate('blur');
-    expect(hasFocus(typeahead)).to.equal(false);
+    expect(hasFocus(typeahead)).toEqual(false);
   });
 
   describe('input focus', () => {
@@ -106,13 +104,13 @@ describe('<Typeahead>', () => {
       });
 
       focus(typeahead);
-      expect(hasFocus(typeahead)).to.equal(true);
+      expect(hasFocus(typeahead)).toEqual(true);
     });
 
     afterEach(() => {
       // The menu should close but the input stays focused.
-      expect(getMenuItems(typeahead).length).to.equal(0);
-      expect(hasFocus(typeahead)).to.equal(true);
+      expect(getMenuItems(typeahead)).toHaveLength(0);
+      expect(hasFocus(typeahead)).toEqual(true);
     });
 
     it('maintains focus when clicking a menu item', () => {
@@ -132,13 +130,13 @@ describe('<Typeahead>', () => {
         defaultSelected: multiSelections,
       });
 
-      expect(getSelected(wrapper).length).to.equal(1);
+      expect(getSelected(wrapper)).toHaveLength(1);
     });
 
     it('truncates selections when using `selected`', () => {
       typeahead.setProps({selected: multiSelections});
 
-      expect(getSelected(typeahead).length).to.equal(1);
+      expect(getSelected(typeahead)).toHaveLength(1);
     });
 
     it('truncates selections when going from multi- to single-select', () => {
@@ -147,12 +145,12 @@ describe('<Typeahead>', () => {
         selected: multiSelections,
       });
 
-      expect(getSelected(typeahead).length).to.equal(multiSelections.length);
+      expect(getSelected(typeahead)).toHaveLength(multiSelections.length);
 
       typeahead.setProps({multiple: false});
 
-      expect(getSelected(typeahead).length).to.equal(1);
-      expect(getSelected(typeahead)).to.deep.equal(states.slice(0, 1));
+      expect(getSelected(typeahead)).toHaveLength(1);
+      expect(getSelected(typeahead)).toEqual(states.slice(0, 1));
     });
 
     it('filters menu options based on `selected` values', () => {
@@ -161,8 +159,8 @@ describe('<Typeahead>', () => {
 
       focus(typeahead);
 
-      expect(getInput(typeahead).prop('value')).to.equal(head(selected).name);
-      expect(getMenuItems(typeahead).length).to.equal(1);
+      expect(getInput(typeahead).prop('value')).toEqual(head(selected).name);
+      expect(getMenuItems(typeahead)).toHaveLength(1);
     });
 
     it('filters menu options based on `defaultSelected` values', () => {
@@ -173,8 +171,8 @@ describe('<Typeahead>', () => {
 
       focus(typeahead);
 
-      expect(getInput(typeahead).prop('value')).to.equal(value);
-      expect(getMenuItems(typeahead).length).to.equal(1);
+      expect(getInput(typeahead).prop('value')).toEqual(value);
+      expect(getMenuItems(typeahead)).toHaveLength(1);
     });
   });
 
@@ -189,12 +187,12 @@ describe('<Typeahead>', () => {
 
     it('sets a default initial input value', () => {
       typeahead = mountTypeahead({defaultInputValue});
-      expect(getInput(typeahead).prop('value')).to.equal(defaultInputValue);
+      expect(getInput(typeahead).prop('value')).toEqual(defaultInputValue);
     });
 
     it('sets an input value based on the `selected` value', () => {
       typeahead.setProps({selected});
-      expect(getInput(typeahead).prop('value')).to.equal(head(selected).name);
+      expect(getInput(typeahead).prop('value')).toEqual(head(selected).name);
     });
 
     it('sets an input value based on the `defaultSelected` value', () => {
@@ -205,15 +203,15 @@ describe('<Typeahead>', () => {
 
     it('overrides the initial input value', () => {
       typeahead = mountTypeahead({defaultInputValue, selected});
-      expect(getInput(typeahead).prop('value')).to.equal(head(selected).name);
+      expect(getInput(typeahead).prop('value')).toEqual(head(selected).name);
     });
   });
 
   describe('menu visibility behavior', () => {
     it('shows the menu on initial render', () => {
       typeahead = mountTypeahead({defaultOpen: true});
-      expect(getState(typeahead).showMenu).to.equal(true);
-      expect(getMenu(typeahead).length).to.equal(1);
+      expect(getState(typeahead).showMenu).toEqual(true);
+      expect(getMenu(typeahead)).toHaveLength(1);
     });
 
     it('shows the menu when `open` is `true`', () => {
@@ -225,24 +223,24 @@ describe('<Typeahead>', () => {
       focus(typeahead);
       getInput(typeahead).simulate('blur');
 
-      expect(getMenu(typeahead).length).to.equal(1);
+      expect(getMenu(typeahead)).toHaveLength(1);
     });
 
     it('hides the menu when `open` is `false`', () => {
       typeahead.setProps({open: false});
       focus(typeahead);
-      expect(getMenu(typeahead).length).to.equal(0);
+      expect(getMenu(typeahead)).toHaveLength(0);
     });
 
     it('shows the menu when the input is focused', () => {
       focus(typeahead);
-      expect(getMenu(typeahead).length).to.equal(1);
+      expect(getMenu(typeahead)).toHaveLength(1);
     });
 
     it('hides the menu on focus when `minLength=1`', () => {
       typeahead.setProps({minLength: 1});
       focus(typeahead);
-      expect(getMenu(typeahead).length).to.equal(0);
+      expect(getMenu(typeahead)).toHaveLength(0);
     });
 
     it(
@@ -257,8 +255,8 @@ describe('<Typeahead>', () => {
         focus(typeahead);
 
         const menuItems = getMenuItems(typeahead);
-        expect(menuItems.length).to.equal(1);
-        expect(menuItems.text()).to.equal('New selection: xx');
+        expect(menuItems).toHaveLength(1);
+        expect(menuItems.text()).toEqual('New selection: xx');
       }
     );
   });
@@ -271,13 +269,13 @@ describe('<Typeahead>', () => {
     }
 
     let menuNode = getMenuWithEmptyLabel('');
-    expect(menuNode.length).to.equal(0);
+    expect(menuNode).toHaveLength(0);
 
     menuNode = getMenuWithEmptyLabel(null);
-    expect(menuNode.length).to.equal(0);
+    expect(menuNode).toHaveLength(0);
 
     menuNode = getMenuWithEmptyLabel(0);
-    expect(menuNode.length).to.equal(0);
+    expect(menuNode).toHaveLength(0);
   });
 
   it('should disable the input if the component is disabled', () => {
@@ -285,7 +283,7 @@ describe('<Typeahead>', () => {
       .setProps({disabled: true})
       .find('.form-control');
 
-    expect(input.prop('disabled')).to.equal(true);
+    expect(input.prop('disabled')).toEqual(true);
   });
 
   it('should not highlight disabled options', () => {
@@ -303,15 +301,15 @@ describe('<Typeahead>', () => {
 
     // Cycling down should activate the first option.
     activeItem = cycleThroughMenuAndGetActiveItem(typeahead, DOWN);
-    expect(activeItem.text()).to.equal(options[0].name);
+    expect(activeItem.text()).toEqual(options[0].name);
 
     // Cycling down should skip the two disabled option.
     activeItem = cycleThroughMenuAndGetActiveItem(typeahead, DOWN);
-    expect(activeItem.text()).to.equal(options[3].name);
+    expect(activeItem.text()).toEqual(options[3].name);
 
     // Cycling back up should again skip the two disabled option.
     activeItem = cycleThroughMenuAndGetActiveItem(typeahead, UP);
-    expect(activeItem.text()).to.equal(options[0].name);
+    expect(activeItem.text()).toEqual(options[0].name);
   });
 
   it(
@@ -328,7 +326,7 @@ describe('<Typeahead>', () => {
 
       // Cycling back up should skip the last option disabled.
       const activeOption = cycleThroughMenuAndGetActiveItem(typeahead, UP);
-      expect(activeOption.text()).to.equal(options[1].name);
+      expect(activeOption.text()).toEqual(options[1].name);
     }
   );
 
@@ -339,7 +337,7 @@ describe('<Typeahead>', () => {
       maxResults = 10;
       shownResultsCount = maxResults;
 
-      onPaginate = sinon.spy((e, shownResults) => {
+      onPaginate = jest.fn((e, shownResults) => {
         shownResultsCount = shownResults;
       });
 
@@ -353,8 +351,8 @@ describe('<Typeahead>', () => {
       focus(typeahead);
       const paginator = getPaginator(typeahead);
 
-      expect(paginator).to.have.length(1);
-      expect(paginator.text()).to.equal('Display additional results...');
+      expect(paginator).toHaveLength(1);
+      expect(paginator.text()).toEqual('Display additional results...');
     });
 
     it('calls `onPaginate` when the menu item is clicked', () => {
@@ -364,9 +362,9 @@ describe('<Typeahead>', () => {
         .hostNodes()
         .simulate('click');
 
-      expect(onPaginate.calledOnce).to.equal(true);
-      expect(shownResultsCount).to.equal(maxResults * 2);
-      expect(getMenuItems(typeahead).length).to.equal(21);
+      expect(onPaginate).toHaveBeenCalledTimes(1);
+      expect(shownResultsCount).toEqual(maxResults * 2);
+      expect(getMenuItems(typeahead)).toHaveLength(21);
     });
 
     it('calls `onPaginate` when the return key is pressed', () => {
@@ -374,9 +372,9 @@ describe('<Typeahead>', () => {
       keyDown(typeahead, UP);
       keyDown(typeahead, RETURN);
 
-      expect(onPaginate.calledOnce).to.equal(true);
-      expect(shownResultsCount).to.equal(maxResults * 2);
-      expect(getMenuItems(typeahead).length).to.equal(21);
+      expect(onPaginate).toHaveBeenCalledTimes(1);
+      expect(shownResultsCount).toEqual(maxResults * 2);
+      expect(getMenuItems(typeahead)).toHaveLength(21);
     });
 
     it('calls `onPaginate` when `labelKey` is a function', () => {
@@ -386,9 +384,9 @@ describe('<Typeahead>', () => {
       keyDown(typeahead, UP);
       keyDown(typeahead, RETURN);
 
-      expect(onPaginate.calledOnce).to.equal(true);
-      expect(shownResultsCount).to.equal(maxResults * 2);
-      expect(getMenuItems(typeahead).length).to.equal(21);
+      expect(onPaginate).toHaveBeenCalledTimes(1);
+      expect(shownResultsCount).toEqual(maxResults * 2);
+      expect(getMenuItems(typeahead)).toHaveLength(21);
     });
 
     it(
@@ -399,13 +397,13 @@ describe('<Typeahead>', () => {
         keyDown(typeahead, UP);
         keyDown(typeahead, RIGHT);
 
-        expect(onPaginate.notCalled).to.equal(true);
+        expect(onPaginate).not.toBeCalled();
 
         keyDown(typeahead, TAB);
-        expect(onPaginate.notCalled).to.equal(true);
+        expect(onPaginate).not.toBeCalled();
 
         // The menu should close when the tab key is pressed.
-        expect(getMenuItems(typeahead).length).to.equal(0);
+        expect(getMenuItems(typeahead)).toHaveLength(0);
       }
     );
 
@@ -414,14 +412,14 @@ describe('<Typeahead>', () => {
       typeahead.setProps({paginationText});
 
       focus(typeahead);
-      expect(getPaginator(typeahead).text()).to.equal(paginationText);
+      expect(getPaginator(typeahead).text()).toEqual(paginationText);
     });
 
     it('does not have a menu item for pagination', () => {
       typeahead.setProps({paginate: false});
 
       focus(typeahead);
-      expect(getPaginator(typeahead)).to.have.length(0);
+      expect(getPaginator(typeahead)).toHaveLength(0);
     });
 
     it('resets the shown results when the input value changes', () => {
@@ -433,16 +431,16 @@ describe('<Typeahead>', () => {
       keyDown(typeahead, UP);
       keyDown(typeahead, RETURN);
 
-      expect(onPaginate.callCount).to.equal(1);
-      expect(shownResultsCount).to.equal(maxResults * 2);
+      expect(onPaginate).toHaveBeenCalledTimes(1);
+      expect(shownResultsCount).toEqual(maxResults * 2);
 
       change(typeahead, 'or');
       focus(typeahead);
       keyDown(typeahead, UP);
       keyDown(typeahead, RETURN);
 
-      expect(onPaginate.callCount).to.equal(2);
-      expect(shownResultsCount).to.equal(maxResults * 2);
+      expect(onPaginate).toHaveBeenCalledTimes(2);
+      expect(shownResultsCount).toEqual(maxResults * 2);
     });
 
     it('updates the active item after pagination', () => {
@@ -450,10 +448,10 @@ describe('<Typeahead>', () => {
       keyDown(typeahead, UP);
 
       const {activeItem} = getState(typeahead);
-      expect(activeItem.paginationOption).to.equal(true);
+      expect(activeItem.paginationOption).toEqual(true);
 
       keyDown(typeahead, RETURN);
-      expect(getState(typeahead).activeItem).to.deep.equal(states[maxResults]);
+      expect(getState(typeahead).activeItem).toEqual(states[maxResults]);
     });
   });
 
@@ -469,34 +467,34 @@ describe('<Typeahead>', () => {
 
       // When `paginate` is true, there will be a pagination menu item in
       // addition to the shown results.
-      expect(getMenuItems(typeahead).length).to.equal(maxResults + 1);
+      expect(getMenuItems(typeahead)).toHaveLength(maxResults + 1);
     });
 
     it('should limit results when `paginate=false`', () => {
       typeahead.setProps({paginate: false});
       focus(typeahead);
 
-      expect(getMenuItems(typeahead).length).to.equal(maxResults);
+      expect(getMenuItems(typeahead)).toHaveLength(maxResults);
     });
   });
 
   it('changes the menu\'s horizontal positioning', () => {
     focus(typeahead);
 
-    expect(getPlacement(typeahead)).to.equal('bottom-start');
+    expect(getPlacement(typeahead)).toEqual('bottom-start');
 
     typeahead.setProps({align: 'right'});
-    expect(getPlacement(typeahead)).to.equal('bottom-end');
+    expect(getPlacement(typeahead)).toEqual('bottom-end');
 
     typeahead.setProps({align: 'left'});
-    expect(getPlacement(typeahead)).to.equal('bottom-start');
+    expect(getPlacement(typeahead)).toEqual('bottom-start');
   });
 
   it('should position the menu above the input when `dropup=true`', () => {
     typeahead.setProps({dropup: true});
     focus(typeahead);
 
-    expect(getPlacement(typeahead)).to.equal('top-start');
+    expect(getPlacement(typeahead)).toEqual('top-start');
   });
 
   it('renders a large input', () => {
@@ -504,7 +502,7 @@ describe('<Typeahead>', () => {
       .setProps({bsSize: 'large'})
       .find('.form-control');
 
-    expect(input.hasClass('input-lg form-control-lg')).to.equal(true);
+    expect(input.hasClass('input-lg form-control-lg')).toEqual(true);
   });
 
   it('renders a small input', () => {
@@ -512,12 +510,12 @@ describe('<Typeahead>', () => {
       .setProps({bsSize: 'small'})
       .find('.form-control');
 
-    expect(input.hasClass('input-sm form-control-sm')).to.equal(true);
+    expect(input.hasClass('input-sm form-control-sm')).toEqual(true);
   });
 
   it('renders a loading indicator', () => {
     typeahead.setProps({isLoading: true});
-    expect(typeahead.find('.rbt-loader')).to.have.length(1);
+    expect(typeahead.find('.rbt-loader')).toHaveLength(1);
   });
 
   describe('ClearButton behavior', () => {
@@ -531,7 +529,7 @@ describe('<Typeahead>', () => {
         selected: states.slice(0, 1),
       });
 
-      expect(getClearButton(typeahead).length).to.equal(1);
+      expect(getClearButton(typeahead)).toHaveLength(1);
     });
 
     it('does not display a clear button when there are no selections', () => {
@@ -539,7 +537,7 @@ describe('<Typeahead>', () => {
         clearButton: true,
         selected: [],
       });
-      expect(getClearButton(typeahead).length).to.equal(0);
+      expect(getClearButton(typeahead)).toHaveLength(0);
     });
   });
 
@@ -551,20 +549,20 @@ describe('<Typeahead>', () => {
       // Pass in new selection
       typeahead.setProps({selected: selected1});
 
-      expect(getSelected(typeahead)).to.deep.equal(selected1);
-      expect(getText(typeahead)).to.equal(head(selected1).name);
+      expect(getSelected(typeahead)).toEqual(selected1);
+      expect(getText(typeahead)).toEqual(head(selected1).name);
 
       // Pass in another new selection
       typeahead.setProps({selected: selected2});
 
-      expect(getSelected(typeahead)).to.deep.equal(selected2);
-      expect(getText(typeahead)).to.equal(head(selected2).name);
+      expect(getSelected(typeahead)).toEqual(selected2);
+      expect(getText(typeahead)).toEqual(head(selected2).name);
 
       // Clear the selections.
       typeahead.setProps({selected: []});
 
-      expect(getSelected(typeahead)).to.deep.equal([]);
-      expect(getText(typeahead)).to.equal('');
+      expect(getSelected(typeahead)).toEqual([]);
+      expect(getText(typeahead)).toEqual('');
     });
 
     it('acts as a controlled input in multi-select mode', () => {
@@ -576,14 +574,14 @@ describe('<Typeahead>', () => {
         selected: selected1,
       });
 
-      expect(getSelected(typeahead)).to.deep.equal(selected1);
-      expect(getText(typeahead)).to.equal('');
+      expect(getSelected(typeahead)).toEqual(selected1);
+      expect(getText(typeahead)).toEqual('');
 
       // Clear the selections.
       typeahead.setProps({selected: []});
 
-      expect(getSelected(typeahead)).to.deep.equal([]);
-      expect(getText(typeahead)).to.equal('');
+      expect(getSelected(typeahead)).toEqual([]);
+      expect(getText(typeahead)).toEqual('');
     });
 
     it('updates the selections and input value in single-select mode', () => {
@@ -593,15 +591,15 @@ describe('<Typeahead>', () => {
         selected: states.slice(0, 1),
       });
 
-      expect(getSelected(typeahead).length).to.equal(1);
-      expect(getText(typeahead)).to.equal('Alabama');
+      expect(getSelected(typeahead)).toHaveLength(1);
+      expect(getText(typeahead)).toEqual('Alabama');
 
       // Simulate deleting the last character.
       change(typeahead, 'Alabam');
 
       // Text entry should clear the selection and keep the entry.
-      expect(getSelected(typeahead).length).to.equal(0);
-      expect(getText(typeahead)).to.equal('Alabam');
+      expect(getSelected(typeahead)).toHaveLength(0);
+      expect(getText(typeahead)).toEqual('Alabam');
     });
   });
 
@@ -621,12 +619,12 @@ describe('<Typeahead>', () => {
 
       const menuItems = getMenuItems(typeahead);
 
-      expect(menuItems.length).to.equal(1);
-      expect(menuItems.hasClass('active')).to.equal(false);
+      expect(menuItems).toHaveLength(1);
+      expect(menuItems.hasClass('active')).toEqual(false);
 
       keyDown(typeahead, RETURN);
 
-      expect(selected.length).to.equal(0);
+      expect(selected).toHaveLength(0);
     });
 
     it('highlights the only result', () => {
@@ -637,12 +635,12 @@ describe('<Typeahead>', () => {
 
       const menuItems = getMenuItems(typeahead);
 
-      expect(menuItems.length).to.equal(1);
-      expect(menuItems.hasClass('active')).to.equal(true);
+      expect(menuItems).toHaveLength(1);
+      expect(menuItems.hasClass('active')).toEqual(true);
 
       keyDown(typeahead, RETURN);
 
-      expect(selected.length).to.equal(1);
+      expect(selected).toHaveLength(1);
     });
 
     it('is compatible with `open=false`', () => {
@@ -665,12 +663,12 @@ describe('<Typeahead>', () => {
 
       const menuItems = getMenuItems(typeahead);
 
-      expect(menuItems.length).to.equal(1);
-      expect(menuItems.hasClass('active')).to.equal(false);
+      expect(menuItems).toHaveLength(1);
+      expect(menuItems.hasClass('active')).toEqual(false);
 
       keyDown(typeahead, RETURN);
 
-      expect(selected.length).to.equal(0);
+      expect(selected).toHaveLength(0);
     });
 
     it('does not highlight or select a disabled result', () => {
@@ -689,12 +687,12 @@ describe('<Typeahead>', () => {
 
       const menuItems = getMenuItems(typeahead);
 
-      expect(menuItems.length).to.equal(1);
-      expect(menuItems.hasClass('active')).to.equal(false);
+      expect(menuItems).toHaveLength(1);
+      expect(menuItems.hasClass('active')).toEqual(false);
 
       keyDown(typeahead, RETURN);
 
-      expect(selected.length).to.equal(0);
+      expect(selected).toHaveLength(0);
     });
   });
 
@@ -717,12 +715,12 @@ describe('<Typeahead>', () => {
     afterEach(() => {
       const props = getInput(typeahead).props();
 
-      expect(props.autoComplete).to.equal(inputProps.autoComplete);
-      expect(props.className).to.contain(inputProps.className);
-      expect(props.id).to.equal(inputProps.id);
-      expect(props.name).to.equal(inputProps.name);
-      expect(props.tabIndex).to.equal(inputProps.tabIndex);
-      expect(props.type).to.equal(inputProps.type);
+      expect(props.autoComplete).toEqual(inputProps.autoComplete);
+      expect(props.className).toContain(inputProps.className);
+      expect(props.id).toEqual(inputProps.id);
+      expect(props.name).toEqual(inputProps.name);
+      expect(props.tabIndex).toEqual(inputProps.tabIndex);
+      expect(props.type).toEqual(inputProps.type);
     });
 
     it('in single-select mode', () => {
@@ -735,38 +733,37 @@ describe('<Typeahead>', () => {
         selected: states.slice(0, 1),
       });
 
-      expect(getTokens(typeahead).prop('tabIndex'))
-        .to.equal(inputProps.tabIndex);
+      expect(getTokens(typeahead).prop('tabIndex')).toEqual(inputProps.tabIndex);
     });
   });
 
   it('triggers the `onKeyDown` callback', () => {
-    const onKeyDown = sinon.spy();
+    const onKeyDown = jest.fn();
 
     typeahead.setProps({onKeyDown});
     keyDown(typeahead, RETURN);
 
-    expect(onKeyDown.calledOnce).to.equal(true);
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
   });
 
   describe('menu visibility hooks', () => {
     it('calls `onMenuShow`', () => {
-      const onMenuShow = sinon.spy();
+      const onMenuShow = jest.fn();
 
       typeahead.setProps({onMenuShow});
 
-      expect(onMenuShow.notCalled).to.equal(true);
+      expect(onMenuShow).not.toBeCalled();
 
       focus(typeahead);
-      expect(onMenuShow.calledOnce).to.equal(true);
+      expect(onMenuShow).toHaveBeenCalledTimes(1);
 
       // Shouldn't be called again if not hidden first.
       focus(typeahead);
-      expect(onMenuShow.calledOnce).to.equal(true);
+      expect(onMenuShow).toHaveBeenCalledTimes(1);
     });
 
     it('calls `onMenuHide`', () => {
-      const onMenuHide = sinon.spy();
+      const onMenuHide = jest.fn();
 
       typeahead.setProps({onMenuHide});
 
@@ -782,7 +779,7 @@ describe('<Typeahead>', () => {
     });
 
     it('calls `onMenuToggle`', () => {
-      const onMenuToggle = sinon.spy();
+      const onMenuToggle = jest.fn();
 
       typeahead.setProps({onMenuToggle});
 
@@ -1086,13 +1083,13 @@ describe('<Typeahead>', () => {
     });
 
     it('clears an uncontrolled typeahead after selection', () => {
-      onChange = sinon.spy((selected) => {
+      onChange = jest.fn((selected) => {
         typeahead.instance().getInstance().clear();
       });
     });
 
     it('clears a controlled typeahead after selection', () => {
-      onChange = sinon.spy((selected) => {
+      onChange = jest.fn((selected) => {
         typeahead.setProps({selected: []});
       });
     });
@@ -1102,8 +1099,8 @@ describe('<Typeahead>', () => {
     let onChange, onInputChange, selected;
 
     beforeEach(() => {
-      onChange = sinon.spy();
-      onInputChange = sinon.spy();
+      onChange = jest.fn();
+      onInputChange = jest.fn();
       selected = states.slice(0, 1);
 
       typeahead.setProps({onChange, onInputChange});

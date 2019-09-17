@@ -1,10 +1,8 @@
-import {expect} from 'chai';
 import {mount} from 'enzyme';
 import React from 'react';
-import sinon from 'sinon';
 
-import MenuItem, {BaseMenuItem} from '../../src/MenuItem.react';
-import TypeaheadMenu from '../../src/TypeaheadMenu.react';
+import MenuItem, {BaseMenuItem} from '../../src/MenuItem';
+import TypeaheadMenu from '../../src/TypeaheadMenu';
 
 import options from '../../example/exampleData';
 import {getMenu, getPaginator} from '../helpers';
@@ -50,15 +48,15 @@ describe('<TypeaheadMenu>', () => {
       .setProps({emptyLabel, options: []})
       .find(BaseMenuItem);
 
-    expect(menuItems.length).to.equal(1);
-    expect(menuItems.first().text()).to.equal(emptyLabel);
+    expect(menuItems).toHaveLength(1);
+    expect(menuItems.first().text()).toEqual(emptyLabel);
   });
 
   describe('pagination behaviors', () => {
     let onPaginate, paginationLabel;
 
     beforeEach(() => {
-      onPaginate = sinon.spy();
+      onPaginate = jest.fn();
       paginationLabel = 'More results...';
       menu.setProps({
         maxResults: 10,
@@ -72,13 +70,13 @@ describe('<TypeaheadMenu>', () => {
 
     it('displays a paginator', () => {
       const paginatorNode = getPaginator(menu);
-      expect(paginatorNode.length).to.equal(1);
-      expect(paginatorNode.text()).to.equal(paginationLabel);
+      expect(paginatorNode).toHaveLength(1);
+      expect(paginatorNode.text()).toEqual(paginationLabel);
     });
 
     it('does not show a paginator when there are no results', () => {
       menu.setProps({options: []});
-      expect(getPaginator(menu).length).to.equal(0);
+      expect(getPaginator(menu)).toHaveLength(0);
     });
   });
 });

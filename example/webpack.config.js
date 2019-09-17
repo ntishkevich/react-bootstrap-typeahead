@@ -1,9 +1,9 @@
-const config = require('../webpack.config.base');
+const config = require('./../config/webpack.config.base');
 const path = require('path');
 
 module.exports = (env, argv) => {
   return Object.assign(config, {
-    entry: './example/index.js',
+    entry: './example/setupFile.js',
     output: {
       filename: 'package-example.js',
       path: path.resolve('example'),

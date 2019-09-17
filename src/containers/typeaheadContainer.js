@@ -8,7 +8,7 @@ import contextContainer from './contextContainer';
 import {caseSensitiveType, checkPropType, defaultInputValueType, emptyLabelType, highlightOnlyResultType, idType, ignoreDiacriticsType, inputPropsType, labelKeyType, optionType, selectedType} from '../propTypes';
 import {addCustomOption, areEqual, defaultFilterBy, getDisplayName, getOptionLabel, getStringLabelKey, getTruncatedOptions, isShown, pluralize} from '../utils';
 
-import {DEFAULT_LABELKEY, DOWN, ESC, RETURN, RIGHT, TAB, UP} from '../constants';
+import {DEFAULT_LABEL_KEY, DOWN, ESC, RETURN, RIGHT, TAB, UP} from '../constants';
 
 function genId(prefix = '') {
   return prefix + Math.random().toString(36).substr(2, 12);
@@ -711,7 +711,7 @@ function typeaheadContainer(Component) {
     isInvalid: false,
     isLoading: false,
     isValid: false,
-    labelKey: DEFAULT_LABELKEY,
+    labelKey: DEFAULT_LABEL_KEY,
     maxResults: 100,
     minLength: 0,
     multiple: false,

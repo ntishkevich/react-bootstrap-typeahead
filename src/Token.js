@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ClearButton from './ClearButton.react';
+import ClearButton from './ClearButton';
 
 import tokenContainer from './containers/tokenContainer';
 import {RETURN} from './constants';
@@ -14,13 +14,7 @@ import {RETURN} from './constants';
  * component, but can also be rendered on its own.
  */
 class Token extends React.Component {
-  render() {
-    return this.props.onRemove && !this.props.disabled ?
-      this._renderRemoveableToken() :
-      this._renderToken();
-  }
-
-  _renderRemoveableToken = () => {
+  renderRemoveableToken = () => {
     const {active, children, className, onRemove, ...props} = this.props;
 
     return (
@@ -34,35 +28,35 @@ class Token extends React.Component {
           className="rbt-token-remove-button"
           label="Remove"
           onClick={onRemove}
-          onKeyDown={this._handleRemoveButtonKeydown}
+          onKeyDown={this.handleRemoveButtonKeydown}
           tabIndex={-1}
         />
       </div>
     );
-  }
+  };
 
-  _renderToken = () => {
-    const {children, className, disabled, href} = this.props;
-    const classnames = cx('rbt-token', {
+  renderToken = () => {
+    const {children, className: classNameProp, disabled, href} = this.props;
+    const className = cx('rbt-token', {
       'rbt-token-disabled': disabled,
-    }, className);
+    }, classNameProp);
 
     if (href) {
       return (
-        <a className={classnames} href={href}>
+        <a className={className} href={href}>
           {children}
         </a>
       );
     }
 
     return (
-      <div className={classnames}>
+      <div className={className}>
         {children}
       </div>
     );
-  }
+  };
 
-  _handleRemoveButtonKeydown = (e) => {
+  handleRemoveButtonKeydown = (e) => {
     switch (e.keyCode) {
       case RETURN:
         this.props.onRemove();
@@ -70,8 +64,19 @@ class Token extends React.Component {
       default:
         break;
     }
+  };
+
+  render() {
+    return this.props.onRemove && !this.props.disabled ?
+      this.renderRemoveableToken() :
+      this.renderToken();
   }
 }
+
+Token.defaultProps = {
+  active: false,
+  tabIndex: 0,
+};
 
 Token.propTypes = {
   active: PropTypes.bool,
@@ -82,11 +87,5 @@ Token.propTypes = {
   onRemove: PropTypes.func,
   tabIndex: PropTypes.number,
 };
-
-Token.defaultProps = {
-  active: false,
-  tabIndex: 0,
-};
-
 
 export default tokenContainer(Token);

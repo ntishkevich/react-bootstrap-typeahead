@@ -1,9 +1,9 @@
-import {noop} from 'lodash';
-import React, {Children, cloneElement} from 'react';
+import React, {Children, Component, cloneElement} from 'react';
 import PropTypes from 'prop-types';
-import {componentOrElement} from 'prop-types-extra';
-import {Portal} from 'react-overlays';
 import {Popper} from 'react-popper';
+import {Portal} from 'react-overlays';
+import {noop} from 'lodash';
+import {componentOrElement} from 'prop-types-extra';
 
 const BODY_CLASS = 'rbt-body-container';
 
@@ -41,9 +41,9 @@ function isBody(container) {
  * work for our needs. Specifically, the `Position` component doesn't provide
  * the customized placement we need.
  */
-class Overlay extends React.Component {
+class Overlay extends Component {
   componentDidMount() {
-    this._update();
+    this.update();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,8 +61,20 @@ class Overlay extends React.Component {
       !!className && container.classList.remove(...className.split(' '));
     }
 
-    this._update();
+    this.update();
   }
+
+  update = () => {
+    const {className, container, show} = this.props;
+
+    if (!(show && isBody(container))) {
+      return;
+    }
+
+    // Set a classname on the body for scoping purposes.
+    container.classList.add(BODY_CLASS);
+    !!className && container.classList.add(...className.split(' '));
+  };
 
   render() {
     const {
@@ -99,19 +111,14 @@ class Overlay extends React.Component {
       </Portal>
     );
   }
-
-  _update = () => {
-    const {className, container, show} = this.props;
-
-    if (!(show && isBody(container))) {
-      return;
-    }
-
-    // Set a classname on the body for scoping purposes.
-    container.classList.add(BODY_CLASS);
-    !!className && container.classList.add(...className.split(' '));
-  }
 }
+
+Overlay.defaultProps = {
+  onMenuHide: noop,
+  onMenuShow: noop,
+  onMenuToggle: noop,
+  show: false,
+};
 
 Overlay.propTypes = {
   children: PropTypes.element,
@@ -121,13 +128,6 @@ Overlay.propTypes = {
   onMenuToggle: PropTypes.func,
   referenceElement: componentOrElement,
   show: PropTypes.bool,
-};
-
-Overlay.defaultProps = {
-  onMenuHide: noop,
-  onMenuShow: noop,
-  onMenuToggle: noop,
-  show: false,
 };
 
 export default Overlay;

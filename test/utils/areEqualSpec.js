@@ -1,5 +1,3 @@
-import {expect} from 'chai';
-
 import areEqual from '../../src/utils/areEqual';
 import options from '../../example/exampleData';
 
@@ -25,13 +23,13 @@ const customThree = {
 
 describe('areEqual', () => {
   it('checks equality of the items', () => {
-    expect(areEqual('foo', 'foo', labelKey)).to.equal(true);
-    expect(areEqual('foo', 'bar', labelKey)).to.equal(false);
+    expect(areEqual('foo', 'foo', labelKey)).toEqual(true);
+    expect(areEqual('foo', 'bar', labelKey)).toEqual(false);
 
-    expect(areEqual(options[0], options[0], labelKey)).to.equal(true);
-    expect(areEqual(options[0], options[1], labelKey)).to.equal(false);
+    expect(areEqual(options[0], options[0], labelKey)).toEqual(true);
+    expect(areEqual(options[0], options[1], labelKey)).toEqual(false);
 
-    expect(areEqual(customOne, customTwo, labelKey)).to.equal(true);
-    expect(areEqual(customOne, customThree, labelKey)).to.equal(false);
+    expect(areEqual(customOne, customTwo, labelKey)).toEqual(true);
+    expect(areEqual(customOne, customThree, labelKey)).toEqual(false);
   });
 });

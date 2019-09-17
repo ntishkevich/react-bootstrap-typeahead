@@ -1,10 +1,10 @@
+import React, {Component} from 'react';
 import cx from 'classnames';
-import React from 'react';
 
 import hintContainer from './containers/hintContainer';
 import inputContainer from './containers/inputContainer';
 
-class TypeaheadInputSingle extends React.Component {
+class TypeaheadInputSingle extends Component {
   render() {
     const {className, inputRef, ...props} = this.props;
 

@@ -85,7 +85,7 @@ class MyCustomMenu extends React.Component {
 ```
 
 #### Manual handling of pagination option
-To make the pagination menu item keyboard-accessible, it is no longer automatically included in the `Menu` component. Instead, it is added to the result set, similar to the custom (`allowNew`) item. That means you must now handle rendering of the pagination item yourself if you want pagination. See [`TypeaheadMenu`](../src/TypeaheadMenu.react.js) for an example of how to do this.
+To make the pagination menu item keyboard-accessible, it is no longer automatically included in the `Menu` component. Instead, it is added to the result set, similar to the custom (`allowNew`) item. That means you must now handle rendering of the pagination item yourself if you want pagination. See [`TypeaheadMenu`](../src/TypeaheadMenu.js) for an example of how to do this.
 
 ## v2.0
 Version 2.0 consists mainly of internal refactoring aimed at reducing parallel code paths and making certain complex feature requests possible. These changes should mostly be transparent, though you may notice that the component behaves a bit differently.

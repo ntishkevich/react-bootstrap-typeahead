@@ -1,9 +1,9 @@
-import {expect} from 'chai';
+
 import {shallow} from 'enzyme';
 import React from 'react';
 
 import Menu from '../../src/Menu.react';
-import MenuItem, {BaseMenuItem} from '../../src/MenuItem.react';
+import MenuItem, {BaseMenuItem} from '../../src/MenuItem';
 
 describe('<Menu>', () => {
   let menu;
@@ -30,8 +30,8 @@ describe('<Menu>', () => {
   });
 
   it('renders a basic menu with menu items', () => {
-    expect(menu.hasClass('rbt-menu dropdown-menu')).to.equal(true);
-    expect(menu.children().length).to.equal(3);
+    expect(menu.hasClass('rbt-menu dropdown-menu')).toEqual(true);
+    expect(menu.children()).toHaveLength(3);
   });
 
   it('sets the maxHeight and other styles', () => {
@@ -46,12 +46,12 @@ describe('<Menu>', () => {
       style: {backgroundColor: 'red'},
     });
 
-    expect(getAttribute(menu, 'backgroundColor')).to.equal('red');
-    expect(getAttribute(menu, 'maxHeight')).to.equal(maxHeight);
+    expect(getAttribute(menu, 'backgroundColor')).toEqual('red');
+    expect(getAttribute(menu, 'maxHeight')).toEqual(maxHeight);
 
     maxHeight = '75%';
     menu.setProps({maxHeight});
-    expect(getAttribute(menu, 'maxHeight')).to.equal(maxHeight);
+    expect(getAttribute(menu, 'maxHeight')).toEqual(maxHeight);
   });
 
   it('renders an empty label when there are no children', () => {
@@ -61,13 +61,13 @@ describe('<Menu>', () => {
       emptyLabel,
     });
 
-    expect(menu.children().length).to.equal(1);
+    expect(menu.children()).toHaveLength(1);
 
     const emptyLabelItem = menu.find(BaseMenuItem);
-    expect(emptyLabelItem.length).to.equal(1);
-    expect(emptyLabelItem.prop('disabled')).to.equal(true);
+    expect(emptyLabelItem).toHaveLength(1);
+    expect(emptyLabelItem.prop('disabled')).toEqual(true);
 
     // See: http://airbnb.io/enzyme/docs/api/ShallowWrapper/dive.html
-    expect(emptyLabelItem.dive().text()).to.equal(emptyLabel);
+    expect(emptyLabelItem.dive().text()).toEqual(emptyLabel);
   });
 });

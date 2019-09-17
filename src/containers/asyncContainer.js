@@ -39,28 +39,6 @@ const asyncContainer = (Typeahead) => {
       this._handleSearchDebounced.cancel();
     }
 
-    render() {
-      const {options, useCache, ...props} = this.props;
-      const cachedQuery = this._cache[this._query];
-
-      // Disable custom selections during a search unless `allowNew` is a
-      // function.
-      const allowNew = typeof props.allowNew === 'function' ?
-        props.allowNew :
-        props.allowNew && !props.isLoading;
-
-      return (
-        <Typeahead
-          {...props}
-          allowNew={allowNew}
-          emptyLabel={this._getEmptyLabel()}
-          onInputChange={this._handleInputChange}
-          options={useCache && cachedQuery ? cachedQuery : options}
-          ref={(instance) => this._instance = instance}
-        />
-      );
-    }
-
     /**
      * Make the component instance available.
      */
@@ -110,6 +88,28 @@ const asyncContainer = (Typeahead) => {
 
       // Perform the search.
       onSearch(query);
+    }
+
+    render() {
+      const {options, useCache, ...props} = this.props;
+      const cachedQuery = this._cache[this._query];
+
+      // Disable custom selections during a search unless `allowNew` is a
+      // function.
+      const allowNew = typeof props.allowNew === 'function' ?
+        props.allowNew :
+        props.allowNew && !props.isLoading;
+
+      return (
+        <Typeahead
+          {...props}
+          allowNew={allowNew}
+          emptyLabel={this._getEmptyLabel()}
+          onInputChange={this._handleInputChange}
+          options={useCache && cachedQuery ? cachedQuery : options}
+          ref={(instance) => this._instance = instance}
+        />
+      );
     }
   }
 
