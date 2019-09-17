@@ -1,10 +1,7 @@
 # React Bootstrap Typeahead
 A [React](https://reactjs.org/)-based typeahead that relies on [Bootstrap](https://getbootstrap.com/) for styling and was originally inspired by Twitter's [typeahead.js](https://github.com/twitter/typeahead.js). It supports both single- and multi-selection and is compliant with [WAI-ARIA authoring practices](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox). Try the [live examples](http://ericgio.github.io/react-bootstrap-typeahead/).
 
-[![npm version](https://img.shields.io/npm/v/react-bootstrap-typeahead.svg?style=flat-square)](https://www.npmjs.com/package/react-bootstrap-typeahead)
-[![npm downloads](https://img.shields.io/npm/dm/react-bootstrap-typeahead.svg?style=flat-square)](https://www.npmjs.com/package/react-bootstrap-typeahead)
-[![build status](https://img.shields.io/travis/ericgio/react-bootstrap-typeahead/master.svg?style=flat-square)](https://travis-ci.org/ericgio/react-bootstrap-typeahead)
-[![cdnjs](https://img.shields.io/cdnjs/v/react-bootstrap-typeahead.svg?style=flat-square)](https://cdnjs.com/libraries/react-bootstrap-typeahead)
+[![Build Status](https://travis-ci.org/ntishkevich/react-bootstrap-typeahead.svg?branch=master)](https://travis-ci.org/ntishkevich/react-bootstrap-typeahead)
 
 Please note that documentation and examples apply to the most recent release and may no longer be applicable if you're using an outdated version.
 
