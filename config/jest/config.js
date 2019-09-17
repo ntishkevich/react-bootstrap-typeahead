@@ -8,7 +8,6 @@ module.exports = {
     'node',
   ],
   rootDir: './../../',
-  runner: 'jest-runner-eslint',
   setupFiles: [
     '<rootDir>/config/jest/polyfills.js',
   ],
