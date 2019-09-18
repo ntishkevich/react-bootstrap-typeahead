@@ -23,6 +23,6 @@ describe('<ClearButton>', () => {
 
   it('registers a click', () => {
     button.simulate('click', {stopPropagation: () => {}});
-    expect(onClick.calledOnce).toEqual(true);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

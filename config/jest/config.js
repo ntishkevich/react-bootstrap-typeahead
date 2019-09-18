@@ -16,8 +16,7 @@ module.exports = {
   ],
   testEnvironment: 'node',
   testMatch: [
-    '<rootDir>/test/**/__tests__/**/*.{js,jsx}',
-    '<rootDir>/test/**/*.{js,jsx}',
+    '<rootDir>/test/**/*.spec.{js,jsx}',
   ],
   testURL: 'http://localhost',
   transform: {

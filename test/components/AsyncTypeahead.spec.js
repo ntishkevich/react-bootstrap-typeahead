@@ -31,7 +31,6 @@ describe('<AsyncTypeahead>', () => {
   });
 
   it('displays a prompt', () => {
-    throw new Error();
     const promptText = 'Prompt text';
 
     wrapper.setProps({promptText});

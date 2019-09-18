@@ -75,15 +75,15 @@ describe('<Overlay>', () => {
         expect(onMenuHide).not.toHaveBeenCalled();
 
         wrapper.setProps({show: false});
-        expect(onMenuHide).toHaveBeenCalled(1);
+        expect(onMenuHide).toHaveBeenCalledTimes(1);
 
         // Shouldn't be called again if not shown first.
         wrapper.setProps({show: false});
-        expect(onMenuHide).toHaveBeenCalled(1);
+        expect(onMenuHide).toHaveBeenCalledTimes(1);
       });
 
       it('calls `onMenuToggle`', () => {
-        const onMenuToggle = sinon.spy();
+        const onMenuToggle = jest.fn();
 
         wrapper.setProps({onMenuToggle});
 

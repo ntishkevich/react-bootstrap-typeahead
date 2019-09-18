@@ -22,23 +22,23 @@ describe('<TypeaheadMenu>', () => {
   });
 
   it('renders a basic typeahead menu', () => {
-    expect(menu.find('ul').hasClass('rbt-menu')).to.equal(true);
-    expect(menu.find(MenuItem).length).to.equal(options.length);
+    expect(menu.find('ul').hasClass('rbt-menu')).toEqual(true);
+    expect(menu.find(MenuItem)).toHaveLength(options.length);
   });
 
   it('renders a menu with the specified max-height', () => {
     const getMaxHeight = (wrapper) => getMenu(wrapper).prop('style').maxHeight;
 
     menu.setProps({maxHeight: '200px'});
-    expect(getMaxHeight(menu)).to.equal('200px');
+    expect(getMaxHeight(menu)).toEqual('200px');
 
     menu.setProps({maxHeight: '50%'});
-    expect(getMaxHeight(menu)).to.equal('50%');
+    expect(getMaxHeight(menu)).toEqual('50%');
   });
 
   it('renders disabled menu items', () => {
     menu.setProps({options: options.map((o) => ({...o, disabled: true}))});
-    expect(menu.find(MenuItem).first().prop('disabled')).to.equal(true);
+    expect(menu.find(MenuItem).first().prop('disabled')).toEqual(true);
   });
 
   it('renders an empty state when there are no results', () => {

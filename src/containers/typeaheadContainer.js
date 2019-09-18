@@ -96,7 +96,8 @@ function typeaheadContainer(Component) {
       this.props.autoFocus && this.focus();
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
       const {labelKey, multiple, selected} = nextProps;
 
       // If new selections are passed via props, treat as a controlled input.
@@ -706,6 +707,7 @@ function typeaheadContainer(Component) {
     filterBy: [],
     flip: false,
     highlightOnlyResult: false,
+    id: genId('rbt-container-'),
     ignoreDiacritics: true,
     inputProps: {},
     isInvalid: false,
@@ -713,6 +715,7 @@ function typeaheadContainer(Component) {
     isValid: false,
     labelKey: DEFAULT_LABEL_KEY,
     maxResults: 100,
+    menuId: genId('rbt-menu-'),
     minLength: 0,
     multiple: false,
     onBlur: noop,
