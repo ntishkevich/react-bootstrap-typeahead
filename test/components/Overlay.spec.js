@@ -1,7 +1,6 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {Popper} from 'react-popper';
-import sinon from 'sinon';
 
 import Menu from '../../src/Menu.react';
 import Overlay from '../../src/Overlay';
@@ -26,7 +25,7 @@ describe('<Overlay>', () => {
       expect(wrapper.type()).toBeNull();
     });
 
-    it('renders a Popper when `show=true`', () => {
+    it('renders a PopperJs when `show=true`', () => {
       wrapper.setProps({show: true});
       expect(wrapper.children().type()).toEqual(Popper);
     });
@@ -129,7 +128,7 @@ describe('<Overlay>', () => {
       wrapper.detach();
     });
 
-    it('renders a Popper when `show=true`', () => {
+    it('renders a PopperJs when `show=true`', () => {
       expect(wrapper.find('.rbt-menu').text()).toEqual('This is the menu');
     });
 

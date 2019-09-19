@@ -12,8 +12,13 @@ ReactWrapper.prototype.hostNodes = function hostNodes() {
 
 global.window.cancelAnimationFrame = function cancelAnimationFrame() { };
 
-global.document.createRange = () => ({
-  commonAncestorContainer: {},
-  setEnd: () => {},
-  setStart: () => {},
+document.createRange = () => ({
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document,
+  },
+  setEnd: () => {
+  },
+  setStart: () => {
+  },
 });

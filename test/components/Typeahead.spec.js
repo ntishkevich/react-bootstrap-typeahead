@@ -84,7 +84,7 @@ describe('<Typeahead>', () => {
     expect(getTokens(typeahead)).toHaveLength(3);
   });
 
-  it('sets and unsets the focus state on focus/blur', () => {
+  it('set and unset the focus state on focus/blur', () => {
     const input = getInput(typeahead);
 
     expect(hasFocus(typeahead)).toEqual(false);
@@ -301,7 +301,6 @@ describe('<Typeahead>', () => {
 
     // Cycling down should activate the first option.
     activeItem = cycleThroughMenuAndGetActiveItem(typeahead, DOWN);
-    console.log(activeItem);
     expect(activeItem.text()).toEqual(options[0].name);
 
     // Cycling down should skip the two disabled option.

@@ -25,6 +25,7 @@ describe('<AsyncTypeahead>', () => {
         delay={0}
         isLoading={false}
         minLength={0}
+        bodyContainer
         onSearch={onSearch}
       />
     );
@@ -44,7 +45,6 @@ describe('<AsyncTypeahead>', () => {
 
   it('displays the search text while searching', (done) => {
     const searchText = 'Search text';
-
     onSearch = () => {
       wrapper.setProps({isLoading: true});
 
@@ -134,8 +134,8 @@ describe('<AsyncTypeahead>', () => {
     keyDown(wrapper, DOWN);
     keyDown(wrapper, RETURN);
 
-    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onSearch).toHaveBeenCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 
   it('uses cached results and does not perform a new search', (done) => {
