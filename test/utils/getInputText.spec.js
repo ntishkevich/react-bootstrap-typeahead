@@ -11,12 +11,12 @@ const baseArgs = {
 };
 
 describe('getInputText', () => {
-  it('returns an empty string when no text is entered', () => {
+  test('returns an empty string when no text is entered', () => {
     const inputText = getInputText(baseArgs);
     expect(inputText).toEqual('');
   });
 
-  it('returns the input text in multiple mode', () => {
+  test('returns the input text in multiple mode', () => {
     const text = 'Cali';
     const inputText = getInputText({
       ...baseArgs,
@@ -27,7 +27,7 @@ describe('getInputText', () => {
     expect(inputText).toEqual(text);
   });
 
-  it('returns the active option label in single-select mode', () => {
+  test('returns the active option label in single-select mode', () => {
     const name = 'California';
     const inputText = getInputText({
       ...baseArgs,
@@ -37,7 +37,7 @@ describe('getInputText', () => {
     expect(inputText).toEqual(name);
   });
 
-  it('returns the active option label in multi-select mode', () => {
+  test('returns the active option label in multi-select mode', () => {
     const name = 'California';
     const inputText = getInputText({
       ...baseArgs,
@@ -48,7 +48,7 @@ describe('getInputText', () => {
     expect(inputText).toEqual(name);
   });
 
-  it('returns the input text if the pagination item is active', () => {
+  test('returns the input text if the pagination item is active', () => {
     const args = {
       ...baseArgs,
       activeItem: {
@@ -61,13 +61,13 @@ describe('getInputText', () => {
     expect(getInputText(args)).toEqual('foo');
   });
 
-  it('returns the selected item label in single-select mode', () => {
+  test('returns the selected item label in single-select mode', () => {
     const selected = options.slice(0, 1);
     const inputText = getInputText({...baseArgs, selected});
     expect(inputText).toEqual(selected[0][labelKey]);
   });
 
-  it('does not return the selected item label in multi-select mode', () => {
+  test('does not return the selected item label in multi-select mode', () => {
     const inputText = getInputText({
       ...baseArgs,
       multiple: true,

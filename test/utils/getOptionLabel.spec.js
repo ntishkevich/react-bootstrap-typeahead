@@ -9,36 +9,36 @@ describe('getOptionLabel', () => {
   });
 
   describe('returns a string when', () => {
-    it('receives an `option` string', () => {
+    test('receives an `option` string', () => {
       const optionLabel = getOptionLabel(label);
       expect(optionLabel).toEqual(label);
     });
 
-    it('receives a `labelKey` function', () => {
+    test('receives a `labelKey` function', () => {
       const labelKeyFunction = (o) => o.label;
       const optionLabel = getOptionLabel(option, labelKeyFunction);
       expect(optionLabel).toEqual(label);
     });
 
-    it('receives a `labelKey` string', () => {
+    test('receives a `labelKey` string', () => {
       const optionLabel = getOptionLabel(option, 'label');
       expect(optionLabel).toEqual(label);
     });
   });
 
-  it('gives precedence to `labelKey` when it is a function', () => {
+  test('gives precedence to `labelKey` when test is a function', () => {
     const customLabel = 'Custom Label';
     const optionLabel = getOptionLabel(label, () => customLabel);
     expect(optionLabel).toEqual(customLabel);
   });
 
   describe('throws an error when', () => {
-    it('has an invalid option', () => {
+    test('has an invalid option', () => {
       const willThrow = () => getOptionLabel([], 'label');
       expect(willThrow).toThrowError(Error);
     });
 
-    it('has no labelKey and the option is an object', () => {
+    test('has no labelKey and the option is an object', () => {
       const willThrow = () => getOptionLabel(option);
       expect(willThrow).toThrowError(Error);
     });

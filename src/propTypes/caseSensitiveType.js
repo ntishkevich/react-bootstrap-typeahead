@@ -1,6 +1,6 @@
 import warn from '../utils/warn';
 
-export default function caseSensitiveType(props, propName, componentName) {
+export default function caseSensitiveType(props) {
   const {caseSensitive, filterBy} = props;
   warn(
     !caseSensitive || typeof filterBy !== 'function',

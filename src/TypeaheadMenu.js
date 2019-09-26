@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import Highlighter from './Highlighter';
-import Menu from './Menu.react';
+import Menu from './Menu';
 import MenuItem from './MenuItem';
 
 import {getOptionLabel} from './utils';

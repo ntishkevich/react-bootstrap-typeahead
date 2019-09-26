@@ -9,7 +9,7 @@ const BLACKLIST = [
   {alt: 'onKeyDown', prop: 'onKeyDown'},
 ];
 
-export default function inputPropsType(props, propName, componentName) {
+export default function inputPropsType(props) {
   const {inputProps} = props;
   if (!(inputProps && isPlainObject(inputProps))) {
     return;

@@ -1,32 +1,42 @@
-import {mount} from 'enzyme';
 import React from 'react';
+import {render, cleanup, fireEvent} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 import Token from '../../src/Token';
 
 describe('<Token>', () => {
-  let token;
+  afterEach(cleanup);
 
-  beforeEach(() => {
-    token = mount(<Token>This is a token</Token>);
+  test('renders a basic token', () => {
+    const {container} = render(
+      // todo wtf data-testid doesn't make any effect inside this case
+      <Token className="token">This is a token</Token>
+    );
+
+    const token = container.querySelector('.token');
+    expect(token).toBeDefined();
+    expect(token).toHaveClass('rbt-token');
+    expect(token).toHaveTextContent('This is a token');
   });
 
-  it('renders a basic token', () => {
-    expect(token.find('div').hasClass('rbt-token')).toEqual(true);
-    expect(token.text()).toEqual('This is a token');
-  });
-
-  it('renders a removeable token', () => {
+  test('renders a removeable token', () => {
     const onRemove = jest.fn();
+    const {container, queryByTestId} = render(
+      <Token
+        onRemove={onRemove}
+        data-testid="token">
+        This is a token
+      </Token>
+    );
 
-    token.setProps({onRemove});
+    const token = queryByTestId('token');
+    expect(token).toBeDefined();
+    expect(token).toHaveClass('rbt-token-removeable');
 
-    const rootNode = token.find('.rbt-token');
-    expect(rootNode.hasClass('rbt-token-removeable')).toEqual(true);
+    const closeButton = container.querySelector('button[type="button"]');
+    fireEvent.click(closeButton);
 
-    const closeButton = token.find('button');
-    closeButton.simulate('click');
-
-    expect(closeButton.hasClass('rbt-token-remove-button')).toEqual(true);
+    expect(closeButton).toHaveClass('rbt-token-remove-button');
     expect(onRemove).toHaveBeenCalledTimes(1);
   });
 });

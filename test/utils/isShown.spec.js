@@ -9,39 +9,39 @@ const baseProps = {
 };
 
 describe('isShown', () => {
-  it('shows the menu', () => {
-    expect(isShown(options, {...baseProps, showMenu: true})).toEqual(true);
+  test('shows the menu', () => {
+    expect(isShown(options, {...baseProps, showMenu: true})).toBe(true);
   });
 
-  it('shows the menu when `open` is true', () => {
-    expect(isShown(options, {...baseProps, open: true})).toEqual(true);
+  test('shows the menu when `open` is true', () => {
+    expect(isShown(options, {...baseProps, open: true})).toBe(true);
   });
 
-  it('hides the menu when `open` is false', () => {
+  test('hides the menu when `open` is false', () => {
     const props = {
       ...baseProps,
       open: false,
       showMenu: true,
     };
 
-    expect(isShown(options, props)).toEqual(false);
+    expect(isShown(options, props)).toBe(false);
   });
 
-  it('hides the menu when `showMenu` is false', () => {
-    expect(isShown(options, baseProps)).toEqual(false);
+  test('hides the menu when `showMenu` is false', () => {
+    expect(isShown(options, baseProps)).toBe(false);
   });
 
-  it('hides the menu when the input value is less than `minLength`', () => {
+  test('hides the menu when the input value is less than `minLength`', () => {
     const props = {
       ...baseProps,
       minLength: 1,
       showMenu: true,
     };
 
-    expect(isShown(options, props)).toEqual(false);
+    expect(isShown(options, props)).toBe(false);
   });
 
-  it('hides the menu when there are no results and no empty label', () => {
-    expect(isShown([], {...baseProps, emptyLabel: ''})).toEqual(false);
+  test('hides the menu when there are no results and no empty label', () => {
+    expect(isShown([], {...baseProps, emptyLabel: ''})).toBe(false);
   });
 });

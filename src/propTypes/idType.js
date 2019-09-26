@@ -1,6 +1,6 @@
 import warn from '../utils/warn';
 
-export default function idType(props, propName, componentName) {
+export default function idType(props) {
   const {id, menuId} = props;
 
   warn(

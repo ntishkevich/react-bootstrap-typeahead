@@ -1,28 +1,45 @@
-import {shallow} from 'enzyme';
 import React from 'react';
+import {render, cleanup, fireEvent} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 import ClearButton from '../../src/ClearButton';
 
 describe('<ClearButton>', () => {
-  let button, onClick;
+  afterEach(cleanup);
 
-  beforeEach(() => {
-    onClick = jest.fn();
-    button = shallow(<ClearButton onClick={onClick} />);
+  test('renders a default clear button', () => {
+    const onClick = jest.fn();
+    const {getByTestId} = render(
+      <ClearButton onClick={onClick} data-testid="clear-button" />
+    );
+
+    const clearButton = getByTestId('clear-button');
+    expect(clearButton.getAttribute('type')).toEqual('button');
+    expect(clearButton).toHaveClass('close rbt-close');
   });
 
-  it('renders a default clear button', () => {
-    expect(button.type()).toEqual('button');
-    expect(button.hasClass('close rbt-close')).toEqual(true);
+  test('renders a large clear button', () => {
+    const onClick = jest.fn();
+    const {getByTestId} = render(
+      <ClearButton
+        onClick={onClick}
+        bsSize="large"
+        data-testid="clear-button"
+      />
+    );
+
+    const clearButton = getByTestId('clear-button');
+    expect(clearButton).toHaveClass('rbt-close-lg');
   });
 
-  it('renders a large clear button', () => {
-    button.setProps({bsSize: 'large'});
-    expect(button.hasClass('rbt-close-lg')).toEqual(true);
-  });
+  test('registers a click', () => {
+    const onClick = jest.fn();
+    const {getByTestId} = render(
+      <ClearButton onClick={onClick} data-testid="clear-button" />
+    );
 
-  it('registers a click', () => {
-    button.simulate('click', {stopPropagation: () => {}});
+    const clearButton = getByTestId('clear-button');
+    fireEvent.click(clearButton);
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

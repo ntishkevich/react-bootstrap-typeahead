@@ -1,17 +1,16 @@
-import {mount} from 'enzyme';
 import React from 'react';
+import {render, cleanup} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
-import MenuItem, {BaseMenuItem} from '../../src/MenuItem';
 import TypeaheadMenu from '../../src/TypeaheadMenu';
 
 import options from '../../example/exampleData';
-import {getMenu, getPaginator} from '../helpers';
 
 describe('<TypeaheadMenu>', () => {
-  let menu;
+  afterEach(cleanup);
 
-  beforeEach(() => {
-    menu = mount(
+  test('renders a basic typeahead menu', () => {
+    const {getByRole} = render(
       <TypeaheadMenu
         id="menu-id"
         labelKey="name"
@@ -19,64 +18,127 @@ describe('<TypeaheadMenu>', () => {
         text=""
       />
     );
+
+    const menu = getByRole('listbox');
+    expect(menu).toHaveClass('rbt-menu');
+    expect(menu.children).toHaveLength(options.length);
   });
 
-  it('renders a basic typeahead menu', () => {
-    expect(menu.find('ul').hasClass('rbt-menu')).toEqual(true);
-    expect(menu.find(MenuItem)).toHaveLength(options.length);
+  test('renders a menu with the specified max-height', () => {
+    const style = {
+      maxHeight: '200px',
+    };
+
+    const {getByRole, rerender} = render(
+      <TypeaheadMenu
+        id="menu-id"
+        style={style}
+        labelKey="name"
+        options={options}
+        text=""
+      />
+    );
+
+    expect(getByRole('listbox')).toHaveStyle(`maxHeight: ${style.maxHeight}`);
+
+    style.maxHeight = '50%';
+    rerender(
+      <TypeaheadMenu
+        style={style}
+        id="menu-id"
+        labelKey="name"
+        options={options}
+        text=""
+      />
+    );
+
+    expect(getByRole('listbox')).toHaveStyle(`maxHeight: ${style.maxHeight}`);
   });
 
-  it('renders a menu with the specified max-height', () => {
-    const getMaxHeight = (wrapper) => getMenu(wrapper).prop('style').maxHeight;
+  test('renders disabled menu items', () => {
+    const disabledOptions = options.map((o) => ({...o, disabled: true}));
+    const {getByRole} = render(
+      <TypeaheadMenu
+        id="menu-id"
+        labelKey="name"
+        text=""
+        options={disabledOptions}
+      />
+    );
 
-    menu.setProps({maxHeight: '200px'});
-    expect(getMaxHeight(menu)).toEqual('200px');
+    const menu = getByRole('listbox');
+    const menuItems = Array.from(menu.children);
 
-    menu.setProps({maxHeight: '50%'});
-    expect(getMaxHeight(menu)).toEqual('50%');
+    menuItems.forEach((menuItem) => {
+      expect(menuItem).toHaveClass('disabled');
+    });
   });
 
-  it('renders disabled menu items', () => {
-    menu.setProps({options: options.map((o) => ({...o, disabled: true}))});
-    expect(menu.find(MenuItem).first().prop('disabled')).toEqual(true);
-  });
-
-  it('renders an empty state when there are no results', () => {
+  test('renders an empty state when there are no results', () => {
     const emptyLabel = 'No matches found.';
+    const {getByRole, getByText} = render(
+      <TypeaheadMenu
+        emptyLabel={emptyLabel}
+        id="menu-id"
+        labelKey="name"
+        options={[]}
+        text=""
+      />
+    );
 
-    const menuItems = menu
-      .setProps({emptyLabel, options: []})
-      .find(BaseMenuItem);
-
-    expect(menuItems).toHaveLength(1);
-    expect(menuItems.first().text()).toEqual(emptyLabel);
+    expect(getByRole('listbox').children).toHaveLength(1);
+    expect(getByText(emptyLabel)).toHaveTextContent(emptyLabel);
   });
 
   describe('pagination behaviors', () => {
-    let onPaginate, paginationLabel;
+    const paginationLabel = 'More results...';
+    const newOptions = options.concat({
+      name: paginationLabel,
+      paginationOption: true,
+    });
+    let onPaginate;
+    let wrapper;
 
     beforeEach(() => {
       onPaginate = jest.fn();
-      paginationLabel = 'More results...';
-      menu.setProps({
-        maxResults: 10,
-        onPaginate,
-        options: options.concat({
-          name: paginationLabel,
-          paginationOption: true,
-        }),
+
+      wrapper = render(
+        <TypeaheadMenu
+          id="menu-id"
+          labelKey="name"
+          options={newOptions}
+          onPaginate={onPaginate}
+          maxResults={10}
+          text=""
+        />
+      );
+    });
+
+    afterEach(cleanup);
+
+    test('displays a paginator', () => {
+      const paginatorNode = wrapper.queryByText(paginationLabel);
+      expect(paginatorNode).toBeDefined();
+      expect(paginatorNode).toHaveTextContent(paginationLabel);
+    });
+
+    test('does not show a paginator when there are no results', () => {
+      wrapper.rerender(
+        <TypeaheadMenu
+          id="menu-id"
+          labelKey="name"
+          options={[]}
+          onPaginate={onPaginate}
+          maxResults={10}
+          text=""
+        />
+      );
+
+      const menu = wrapper.getByRole('listbox');
+      const menuItems = Array.from(menu.children);
+      menuItems.forEach((menuItem) => {
+        expect(menuItem).toHaveClass('disabled');
       });
-    });
-
-    it('displays a paginator', () => {
-      const paginatorNode = getPaginator(menu);
-      expect(paginatorNode).toHaveLength(1);
-      expect(paginatorNode.text()).toEqual(paginationLabel);
-    });
-
-    it('does not show a paginator when there are no results', () => {
-      menu.setProps({options: []});
-      expect(getPaginator(menu)).toHaveLength(0);
     });
   });
 });

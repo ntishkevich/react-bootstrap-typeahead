@@ -6,3 +6,4 @@ lib
 **/node_modules
 scripts
 **/webpack*.config.js
+/config/**

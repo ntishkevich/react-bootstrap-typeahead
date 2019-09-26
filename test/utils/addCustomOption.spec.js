@@ -14,59 +14,59 @@ describe('addCustomOption', () => {
     };
   });
 
-  it('does not add a custom option when `allowNew` is false', () => {
+  test('does not add a custom option when `allowNew` is false', () => {
     const props = {
       ...defaultProps,
       allowNew: false,
     };
-    expect(addCustomOption(options, props)).toEqual(false);
+    expect(addCustomOption(options, props)).toBe(false);
   });
 
-  it('does not add a custom option when no text is entered', () => {
+  test('does not add a custom option when no text is entered', () => {
     const props = {
       ...defaultProps,
       text: '',
     };
-    expect(addCustomOption(options, props)).toEqual(false);
+    expect(addCustomOption(options, props)).toBe(false);
   });
 
-  it('adds a custom option if no matches are found', () => {
-    expect(addCustomOption(options, defaultProps)).toEqual(true);
+  test('adds a custom option if no matches are found', () => {
+    expect(addCustomOption(options, defaultProps)).toBe(true);
   });
 
-  it('adds a custom option when `labelKey` is a function', () => {
+  test('adds a custom option when `labelKey` is a function', () => {
     const props = {
       ...defaultProps,
       labelKey: (o) => o.name,
     };
-    expect(addCustomOption(options, props)).toEqual(true);
+    expect(addCustomOption(options, props)).toBe(true);
   });
 
-  it('adds a custom option when no exact matches are found', () => {
+  test('adds a custom option when no exact matches are found', () => {
     const props = {...defaultProps, text: 'Ala'};
-    expect(addCustomOption(options, props)).toEqual(true);
+    expect(addCustomOption(options, props)).toBe(true);
   });
 
-  it('does not add a custom option when an exact match is found', () => {
+  test('does not add a custom option when an exact match is found', () => {
     const props = {...defaultProps, text: 'Wyoming'};
-    expect(addCustomOption(options, props)).toEqual(false);
+    expect(addCustomOption(options, props)).toBe(false);
   });
 
-  it('adds a custom option when `allowNew` returns true', () => {
+  test('adds a custom option when `allowNew` returns true', () => {
     const props = {
       ...defaultProps,
       allowNew: () => true,
       text: 'North Carolina', // Would otherwise return false
     };
-    expect(addCustomOption(options, props)).toEqual(true);
+    expect(addCustomOption(options, props)).toBe(true);
   });
 
-  it('does not add a custom option when `allowNew` returns false', () => {
+  test('does not add a custom option when `allowNew` returns false', () => {
     const props = {
       ...defaultProps,
       allowNew: () => false,
       text: 'xxx', // Would otherwise return true
     };
-    expect(addCustomOption(options, props)).toEqual(false);
+    expect(addCustomOption(options, props)).toBe(false);
   });
 });

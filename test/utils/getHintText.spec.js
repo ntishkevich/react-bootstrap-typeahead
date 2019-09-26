@@ -13,37 +13,37 @@ const props = {
 };
 
 describe('getHintText', () => {
-  it('returns a case-sensitive hint string', () => {
+  test('returns a case-sensitive hint string', () => {
     const hintText = getHintText(props);
     expect(hintText).toEqual('alAbama');
   });
 
-  it('returns an empty string when the text is empty', () => {
+  test('returns an empty string when the text is empty', () => {
     const hintText = getHintText({...props, text: ''});
     expect(hintText).toEqual('');
   });
 
-  it('returns an empty string when the menu is not focused', () => {
+  test('returns an empty string when the menu is not focused', () => {
     const hintText = getHintText({...props, isFocused: false});
     expect(hintText).toEqual('');
   });
 
-  it('returns an empty string when a menu item is active', () => {
+  test('returns an empty string when a menu item is active', () => {
     const hintText = getHintText({...props, activeItem: props.initialItem});
     expect(hintText).toEqual('');
   });
 
-  it('returns an empty string when there is a selection', () => {
+  test('returns an empty string when there is a selection', () => {
     const hintText = getHintText({...props, selected: [states[0]]});
     expect(hintText).toEqual('');
   });
 
-  it('returns an empty string when the menu is hidden', () => {
+  test('returns an empty string when the menu is hidden', () => {
     const hintText = getHintText({...props, isMenuShown: false});
     expect(hintText).toEqual('');
   });
 
-  it(
+  test(
     'returns an empty string when the initial item does not begin with the ' +
     'input string',
     () => {
@@ -52,13 +52,14 @@ describe('getHintText', () => {
     }
   );
 
-  it('returns an empty string when the initial item is a custom option', () => {
-    const initialItem = {...props.initialItem, customOption: true};
-    const hintText = getHintText({...props, initialItem});
-    expect(hintText).toEqual('');
-  });
+  test('returns an empty string when the initial item is a custom option',
+    () => {
+      const initialItem = {...props.initialItem, customOption: true};
+      const hintText = getHintText({...props, initialItem});
+      expect(hintText).toEqual('');
+    });
 
-  it('handles string with composed diacritical marks', () => {
+  test('handles string with composed diacritical marks', () => {
     const hintText = getHintText({
       ...props,
       initialItem: 'Schön ist, was schön lässt.',
@@ -67,7 +68,7 @@ describe('getHintText', () => {
     expect(hintText).toEqual('schon ist, was schön lässt.');
   });
 
-  it('handles string with combined diacritical marks', () => {
+  test('handles string with combined diacritical marks', () => {
     const hintText = getHintText({
       ...props,
       initialItem: 'Scho\u0308n ist, was scho\u0308n la\u0308sst.',

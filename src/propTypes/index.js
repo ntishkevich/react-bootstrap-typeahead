@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-spacing */
 export {default as caseSensitiveType} from './caseSensitiveType';
 export {default as checkPropType} from './checkPropType';
 export {default as defaultInputValueType} from './defaultInputValueType';
@@ -10,4 +9,3 @@ export {default as inputPropsType} from './inputPropsType';
 export {default as labelKeyType} from './labelKeyType';
 export {default as optionType} from './optionType';
 export {default as selectedType} from './selectedType';
-/* eslint-enable object-curly-spacing */

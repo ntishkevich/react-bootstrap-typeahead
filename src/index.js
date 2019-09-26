@@ -1,7 +1,7 @@
 // Components
 export {default as AsyncTypeahead} from './AsyncTypeahead';
 export {default as Highlighter} from './Highlighter';
-export {default as Menu} from './Menu.react';
+export {default as Menu} from './Menu';
 export {default as MenuItem} from './MenuItem';
 export {default as Token} from './Token';
 export {default as Typeahead} from './Typeahead';

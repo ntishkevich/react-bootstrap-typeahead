@@ -30,7 +30,7 @@ export function getInput(wrapper) {
 }
 
 export function getMenu(wrapper) {
-  return wrapper.find('.rbt-menu').hostNodes();
+  return wrapper.querySelector('.rbt-menu');
 }
 
 export function getMenuItems(wrapper) {
@@ -40,7 +40,7 @@ export function getMenuItems(wrapper) {
 }
 
 export function getPaginator(wrapper) {
-  return wrapper.find('.rbt-menu-pagination-option').hostNodes();
+  return wrapper.querySelector('.rbt-menu-pagination-option');
 }
 
 export function getTokens(wrapper) {

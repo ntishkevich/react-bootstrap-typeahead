@@ -1,9 +1,7 @@
 import warn from '../utils/warn';
 
 export default function highlightOnlyResultType(
-  props,
-  propName,
-  componentName
+  props
 ) {
   const {allowNew, highlightOnlyResult} = props;
   warn(

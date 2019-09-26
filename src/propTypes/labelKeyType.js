@@ -1,6 +1,6 @@
 import warn from '../utils/warn';
 
-export default function labelKeyType(props, propName, componentName) {
+export default function labelKeyType(props) {
   const {allowNew, labelKey} = props;
   warn(
     !(typeof labelKey === 'function' && allowNew),

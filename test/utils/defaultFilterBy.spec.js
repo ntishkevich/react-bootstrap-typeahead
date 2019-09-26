@@ -25,7 +25,7 @@ describe('defaultFilterBy', () => {
     };
   });
 
-  it('filters an array of objects', () => {
+  test('filters an array of objects', () => {
     const results = options.filter((o) => defaultFilterBy(o, props));
     expect(results).toEqual(FILTERED_RESULTS);
   });
@@ -35,33 +35,33 @@ describe('defaultFilterBy', () => {
       props = {...props, labelKey: (o) => o.name};
     });
 
-    it('returns a set of results', () => {
+    test('returns a set of results', () => {
       const results = options.filter((o) => defaultFilterBy(o, props));
       expect(results).toEqual(FILTERED_RESULTS);
     });
 
-    it('returns no results if the text doesn\'t find a match', () => {
+    test('returns no results if the text doesn\'t find a match', () => {
       props = {...props, text: 'zzz'};
       const results = options.filter((o) => defaultFilterBy(o, props));
       expect(results).toHaveLength(0);
     });
   });
 
-  it('returns case-sensitive filtered results', () => {
+  test('returns case-sensitive filtered results', () => {
     props = {...props, caseSensitive: true, text: 'alab'};
     const results = options.filter((o) => defaultFilterBy(o, props));
 
     expect(results).toHaveLength(0);
   });
 
-  it('filters based on a set of fields and returns results', () => {
+  test('filters based on a set of fields and returns results', () => {
     props = {...props, filterBy: ['name', 'capital'], text: 'sacr'};
     const results = options.filter((o) => defaultFilterBy(o, props));
 
     expect(results).toEqual(FILTERED_RESULTS.slice(0, 1));
   });
 
-  it('filters an array of strings', () => {
+  test('filters an array of strings', () => {
     const stringOptions = options.map((o) => o.name);
     const results = stringOptions.filter((o) => (
       defaultFilterBy(o, props)
@@ -74,13 +74,13 @@ describe('defaultFilterBy', () => {
     ]);
   });
 
-  it('returns no results if the text doesn\'t find a match', () => {
+  test('returns no results if the text doesn\'t find a match', () => {
     props = {...props, text: 'zzz'};
     const results = options.filter((o) => defaultFilterBy(o, props));
     expect(results).toHaveLength(0);
   });
 
-  it('returns the option if the text matches exactly', () => {
+  test('returns the option if the text matches exactly', () => {
     props = {...props, text: 'California'};
     const results = options.filter((o) => defaultFilterBy(o, props));
 
@@ -88,7 +88,7 @@ describe('defaultFilterBy', () => {
     expect(results[0][props.labelKey]).toEqual(props.text);
   });
 
-  it(
+  test(
     'returns no results if `multiple=true` and the text only matches ' +
     'selected results', () => {
       props = {
@@ -108,12 +108,12 @@ describe('defaultFilterBy', () => {
       props = {...props, text: 'franc'};
     });
 
-    it('ignores diacritical marks when filtering', () => {
+    test('ignores diacritical marks when filtering', () => {
       const results = options.filter((o) => defaultFilterBy(o, props));
       expect(results).toEqual(['Français']);
     });
 
-    it('considers diacritical marks when filtering', () => {
+    test('considers diacritical marks when filtering', () => {
       props = {...props, ignoreDiacritics: false};
       const results = options.filter((o) => defaultFilterBy(o, props));
       expect(results).toHaveLength(0);

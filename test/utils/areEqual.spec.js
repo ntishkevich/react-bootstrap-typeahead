@@ -22,14 +22,14 @@ const customThree = {
 };
 
 describe('areEqual', () => {
-  it('checks equality of the items', () => {
-    expect(areEqual('foo', 'foo', labelKey)).toEqual(true);
-    expect(areEqual('foo', 'bar', labelKey)).toEqual(false);
+  test('checks equality of the items', () => {
+    expect(areEqual('foo', 'foo', labelKey)).toBe(true);
+    expect(areEqual('foo', 'bar', labelKey)).toBe(false);
 
-    expect(areEqual(options[0], options[0], labelKey)).toEqual(true);
-    expect(areEqual(options[0], options[1], labelKey)).toEqual(false);
+    expect(areEqual(options[0], options[0], labelKey)).toBe(true);
+    expect(areEqual(options[0], options[1], labelKey)).toBe(false);
 
-    expect(areEqual(customOne, customTwo, labelKey)).toEqual(true);
-    expect(areEqual(customOne, customThree, labelKey)).toEqual(false);
+    expect(areEqual(customOne, customTwo, labelKey)).toBe(true);
+    expect(areEqual(customOne, customThree, labelKey)).toBe(false);
   });
 });

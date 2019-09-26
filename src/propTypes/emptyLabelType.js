@@ -1,6 +1,6 @@
 import warn from '../utils/warn';
 
-export default function emptyLabelType(props, propName, componentName) {
+export default function emptyLabelType(props) {
   const {emptyLabel} = props;
   warn(
     !!emptyLabel,

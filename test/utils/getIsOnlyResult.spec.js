@@ -11,30 +11,30 @@ describe('getIsOnlyResult', () => {
     };
   });
 
-  it('returns true', () => {
-    expect(getIsOnlyResult(props)).toEqual(true);
+  test('returns true', () => {
+    expect(getIsOnlyResult(props)).toBe(true);
   });
 
-  it('returns false when `highlightOnlyResult` is disabled', () => {
+  test('returns false when `highlightOnlyResult` is disabled', () => {
     props.highlightOnlyResult = false;
-    expect(getIsOnlyResult(props)).toEqual(false);
+    expect(getIsOnlyResult(props)).toBe(false);
   });
 
-  it('returns false when custom options are allowed', () => {
+  test('returns false when custom options are allowed', () => {
     props.allowNew = true;
-    expect(getIsOnlyResult(props)).toEqual(false);
+    expect(getIsOnlyResult(props)).toBe(false);
   });
 
-  it('returns false when there are more or less than one result', () => {
+  test('returns false when there are more or less than one result', () => {
     props.results = ['One', 'Two'];
     expect(getIsOnlyResult(props)).toEqual(false);
 
     props.results = [];
-    expect(getIsOnlyResult(props)).toEqual(false);
+    expect(getIsOnlyResult(props)).toBe(false);
   });
 
-  it('returns false when the only result is disabled', () => {
+  test('returns false when the only result is disabled', () => {
     props.results = [{disabled: true}];
-    expect(getIsOnlyResult(props)).toEqual(false);
+    expect(getIsOnlyResult(props)).toBe(false);
   });
 });

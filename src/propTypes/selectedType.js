@@ -1,6 +1,6 @@
 import warn from '../utils/warn';
 
-export default function selectedType(props, propName, componentName) {
+export default function selectedType(props) {
   const {onChange, selected} = props;
   warn(
     !selected || (selected && typeof onChange === 'function'),

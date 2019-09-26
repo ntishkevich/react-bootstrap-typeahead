@@ -1,16 +1,18 @@
-import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {Popper} from 'react-popper';
+import {render, cleanup, fireEvent} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
-import Menu from '../../src/Menu.react';
+import Menu from '../../src/Menu';
 import Overlay from '../../src/Overlay';
 
-describe('<Overlay>', () => {
+describe.skip('<Overlay>', () => {
   describe('shallow behaviors', () => {
-    let wrapper;
-    beforeEach(() => {
-      const div = document.createElement('div');
-      wrapper = shallow(
+
+    afterEach(cleanup);
+
+    test('returns `null` when `show=false`', () => {
+      const {container} = render(
         <Overlay
           container={div}
           referenceElement={div}
@@ -18,25 +20,23 @@ describe('<Overlay>', () => {
           <div>This is the menu</div>
         </Overlay>
       );
-    });
 
-    it('returns `null` when `show=false`', () => {
       expect(wrapper).toHaveLength(1);
       expect(wrapper.type()).toBeNull();
     });
 
-    it('renders a PopperJs when `show=true`', () => {
+    test('renders a PopperJs when `show=true`', () => {
       wrapper.setProps({show: true});
       expect(wrapper.children().type()).toEqual(Popper);
     });
 
-    it('returns `null` when child is `null`', () => {
+    test('returns `null` when child is `null`', () => {
       wrapper.setProps({children: null, show: true});
       expect(wrapper).toHaveLength(1);
       expect(wrapper.type()).toBeNull();
     });
 
-    it('throws when multiple children are passed', () => {
+    test('throws when multiple children are passed', () => {
       const willThrow = () => {
         wrapper.setProps({
           children: [<div key="1" />, <div key="2" />],
@@ -48,7 +48,7 @@ describe('<Overlay>', () => {
     });
 
     describe('menu visibility hooks', () => {
-      it('calls `onMenuShow`', () => {
+      test('calls `onMenuShow`', () => {
         const onMenuShow = jest.fn();
 
         wrapper.setProps({onMenuShow});
@@ -63,7 +63,7 @@ describe('<Overlay>', () => {
         expect(onMenuShow).toHaveBeenCalledTimes(1);
       });
 
-      it('calls `onMenuHide`', () => {
+      test('calls `onMenuHide`', () => {
         const onMenuHide = jest.fn();
 
         wrapper.setProps({
@@ -81,7 +81,7 @@ describe('<Overlay>', () => {
         expect(onMenuHide).toHaveBeenCalledTimes(1);
       });
 
-      it('calls `onMenuToggle`', () => {
+      test('calls `onMenuToggle`', () => {
         const onMenuToggle = jest.fn();
 
         wrapper.setProps({onMenuToggle});
@@ -128,16 +128,16 @@ describe('<Overlay>', () => {
       wrapper.detach();
     });
 
-    it('renders a PopperJs when `show=true`', () => {
+    test('renders a PopperJs when `show=true`', () => {
       expect(wrapper.find('.rbt-menu').text()).toEqual('This is the menu');
     });
 
-    it('is attached to `div`', () => {
+    test('is attached to `div`', () => {
       expect(document.body.childNodes).toHaveLength(BASE_NODE_COUNT + 1);
       expect(div.childNodes).toHaveLength(1);
     });
 
-    it('is attached to `document.body`', () => {
+    test('is attached to `document.body`', () => {
       wrapper.setProps({container: document.body});
 
       expect(document.body.childNodes).toHaveLength(BASE_NODE_COUNT + 2);

@@ -1,73 +1,89 @@
-
-import {shallow} from 'enzyme';
 import React from 'react';
+import {render, cleanup} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
-import Menu from '../../src/Menu.react';
-import MenuItem, {BaseMenuItem} from '../../src/MenuItem';
+import Menu from '../../src/Menu';
+import MenuItem from '../../src/MenuItem';
 
 describe('<Menu>', () => {
-  let menu;
+  const options = [
+    {label: 'Item 1'},
+    {label: 'Item 2'},
+    {label: 'Item 3'},
+  ];
+  const children = options.map((o, idx) => (
+    <MenuItem
+      key={o.label}
+      option={o}
+      position={idx}>
+      {o.label}
+    </MenuItem>
+  ));
 
-  beforeEach(() => {
-    const options = [
-      {label: 'Item 1'},
-      {label: 'Item 2'},
-      {label: 'Item 3'},
-    ];
+  afterEach(cleanup);
 
-    menu = shallow(
-      <Menu id="menu-id" paginate={false}>
-        {options.map((o, idx) => (
-          <MenuItem
-            key={o.label}
-            option={o}
-            position={idx}>
-            {o.label}
-          </MenuItem>
-        ))}
+  test('renders a basic menu with menu items', () => {
+    const {queryByRole} = render(
+      <Menu
+        id="menu-id"
+        paginate={false}>
+        {children}
       </Menu>
     );
+
+    const dropdownMenu = queryByRole('listbox');
+    expect(dropdownMenu).toBeDefined();
+    expect(dropdownMenu).toHaveClass('rbt-menu dropdown-menu');
+    expect(dropdownMenu.children).toHaveLength(children.length);
   });
 
-  it('renders a basic menu with menu items', () => {
-    expect(menu.hasClass('rbt-menu dropdown-menu')).toEqual(true);
-    expect(menu.children()).toHaveLength(3);
+  test('sets the maxHeight and other styles', () => {
+    const style = {
+      backgroundColor: 'red',
+      maxHeight: '100px',
+    };
+
+    const {queryByRole, rerender} = render(
+      <Menu
+        id="menu-id"
+        style={style}
+        paginate={false}>
+        {children}
+      </Menu>
+    );
+    const menu = queryByRole('listbox');
+    expect(menu).toHaveStyle(`backgroundColor: ${style}`);
+    expect(menu).toHaveStyle(`maxHeight: ${style.maxHeight}`);
+
+    style.maxHeight = '75%';
+    rerender(
+      <Menu
+        id="menu-id"
+        style={style}
+        paginate={false}>
+        {children}
+      </Menu>
+    );
+
+    expect(menu).toHaveStyle(`maxHeight: ${style.maxHeight}`);
   });
 
-  it('sets the maxHeight and other styles', () => {
-    let maxHeight = '100px';
-
-    function getAttribute(wrapper, attribute) {
-      return wrapper.prop('style')[attribute];
-    }
-
-    menu.setProps({
-      maxHeight,
-      style: {backgroundColor: 'red'},
-    });
-
-    expect(getAttribute(menu, 'backgroundColor')).toEqual('red');
-    expect(getAttribute(menu, 'maxHeight')).toEqual(maxHeight);
-
-    maxHeight = '75%';
-    menu.setProps({maxHeight});
-    expect(getAttribute(menu, 'maxHeight')).toEqual(maxHeight);
-  });
-
-  it('renders an empty label when there are no children', () => {
+  test('renders an empty label when there are no children', () => {
     const emptyLabel = 'No matches.';
-    menu.setProps({
-      children: undefined,
-      emptyLabel,
-    });
+    const {queryByRole, queryByText} = render(
+      <Menu
+        id="menu-id"
+        emptyLabel={emptyLabel}
+        paginate={false}
+      />
+    );
 
-    expect(menu.children()).toHaveLength(1);
+    const menu = queryByRole('listbox');
+    expect(menu.children).toHaveLength(1);
 
-    const emptyLabelItem = menu.find(BaseMenuItem);
-    expect(emptyLabelItem).toHaveLength(1);
-    expect(emptyLabelItem.prop('disabled')).toEqual(true);
-
-    // See: http://airbnb.io/enzyme/docs/api/ShallowWrapper/dive.html
-    expect(emptyLabelItem.dive().text()).toEqual(emptyLabel);
+    const emptyLabelItem = queryByText(emptyLabel);
+    expect(emptyLabelItem).toBeDefined();
+    expect(emptyLabelItem).toHaveTextContent(emptyLabel);
+    expect(emptyLabelItem).toHaveClass('disabled');
   });
 });
